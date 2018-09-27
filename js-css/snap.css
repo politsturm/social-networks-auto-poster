@@ -1,0 +1,466 @@
+.nsBigText{font-size: 14px; color: #585858; font-weight: bold; display: inline;}
+.NXSButton { background-color:#89c403;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #89c403), color-stop(1, #77a809) );
+    background:-moz-linear-gradient( center top, #89c403 5%, #77a809 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#89c403', endColorstr='#77a809');    
+    -moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px; border:1px solid #74b807; display:inline-block; color:#ffffff;
+    font-family:Trebuchet MS; font-size:12px; font-weight:bold; padding:4px 5px;  text-decoration:none;  text-shadow:1px 1px 0px #528009;
+}.NXSButton:hover {color:#ffffff; background-color:#77a809;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #77a809), color-stop(1, #89c403) );
+    background:-moz-linear-gradient( center top, #77a809 5%, #89c403 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403');    
+}.NXSButton:active {color:#ffffff; position:relative; top:1px;}.NXSButton:focus {color:#ffffff; position:relative; top:1px;} 
+.NXSButtonSm { background-color:#89c403;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #89c403), color-stop(1, #77a809) );
+    background:-moz-linear-gradient( center top, #89c403 5%, #77a809 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#89c403', endColorstr='#77a809');    
+    -moz-border-radius:2px; -webkit-border-radius:2px; border-radius:2px; border:1px solid #74b807; display:inline-block; color:#ffffff;
+    font-family:Trebuchet MS; font-size:11px; font-weight:bold; padding:1px 3px;  text-decoration:none;  text-shadow:1px 1px 0px #528009;
+}.NXSButtonSm:hover {color:#ffffff; background-color:#77a809;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #77a809), color-stop(1, #89c403) );
+    background:-moz-linear-gradient( center top, #77a809 5%, #89c403 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403');    
+}.NXSButtonSm:active {color:#ffffff; position:relative; top:1px;}.NXSButtonSm:focus {color:#ffffff; position:relative; top:1px;} 
+.NXSButtonB { background-color:#038bc4;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #038bc4), color-stop(1, #096aa8) );
+    background:-moz-linear-gradient( center top, #038bc4 5%, #096aa8 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#038bc4', endColorstr='#096aa8');    
+    -moz-border-radius:4px; -webkit-border-radius:4px; border-radius:4px; border:1px solid #077cb8; display:inline-block; color:#ffffff;
+    font-family:Trebuchet MS; font-size:12px; font-weight:bold; padding:4px 5px;  text-decoration:none;  text-shadow:1px 1px 0px #095d80;
+}.NXSButtonB:hover {color:#ffffff; background-color:#096aa8;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #096aa8), color-stop(1, #038bc4) );
+    background:-moz-linear-gradient( center top, #096aa8 5%, #038bc4 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#096aa8', endColorstr='#038bc4');    
+}.NXSButtonB:active {color:#ffffff; position:relative; top:1px;}.NXSButton:focus {color:#ffffff; position:relative; top:1px;} 
+#nxs_ntType {width: 150px;}
+.nxsInfoMsg{  margin: 1px auto; padding: 3px 10px 3px 5px; border: 1px solid #ffea90;  background-color: #fdfae4; display: inline; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
+.blnkg{text-decoration:blink; font-size: 17px; color: #0CB107; font-weight: bold; display: inline;}
+
+div.popShAtt { display: none; position: absolute; width: 600px; padding: 10px; background: #eeeeee; color: #000000; border: 1px solid #1a1a1a; font-size: 90%; }
+.underdash {border-bottom: 1px #21759B dashed; text-decoration:none;}
+.underdash a:hover {border-bottom: 1px #21759B dashed}
+
+.nxsTHRow {vertical-align:top; padding-top:6px; text-align:right; width:80px; padding-right:10px;}
+
+ul.nsx_tabs {margin: 0;padding: 0; margin-top:5px;float: left;list-style: none;height: 32px;border-bottom: 1px solid #999;border-left: 1px solid #999;width: 99%;}
+ul.nsx_tabs li {float: left;margin: 0;padding: 0;height: 31px;line-height: 31px;border: 1px solid #999;border-left: none;margin-bottom: -1px;overflow: hidden;position: relative;background: #e0e0e0;}
+ul.nsx_tabs li a {text-decoration: none;color: #000; display: block; font-size: 1.2em; padding: 0 20px; border: 1px solid #fff; outline: none;}
+ul.nsx_tabs li a:hover { background: #ccc;}
+html ul.nsx_tabs li.active, html ul.nsx_tabs li.active a:hover  { background: #fff; border-bottom: 1px solid #fff; }
+.nsx_tab_container {border: 1px solid #999; border-top: none; overflow: hidden; clear: both; float: left; width: 99%; background: #fff;}
+.nsx_tab_content {padding: 10px;}
+
+.nxs_tls_cpt{width:100%; padding-bottom: 5px; padding-top: 10px;font-size: 16px; font-weight: bold;}
+.nxs_tls_bd{width:100%; padding-left: 10px; padding-bottom: 10px;}
+.nxs_tls_sbInfo{font-style: italic; padding-bottom: 10px; padding-top: 2px;}
+.nxs_tls_sbInfo2{font-style: italic; padding-left: 10px; padding-bottom: 5px; line-height: 10px; font-size: 11px;}
+.nxs_tls_lbl{width:100%;padding-top:7px;padding-bottom:1px;}
+.nxsInstrSpan{ font-size: 11px; }
+
+/* DropDown menu */
+
+.nxs_dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+.nxs_dropbtn:hover, .nxs_dropbtn:focus {
+    background-color: #3e8e41;
+}
+.nxs_dropdown {
+    float: right;
+    position: relative;
+    display: inline-block;  
+    padding: 1.5em;  
+}
+.nxs_dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+    right: 0;
+    z-index: 1;
+}
+
+.nxs_dropdown-content a {
+    color: black;
+    padding: 6px 8px;
+    text-decoration: none;
+    display: block;
+}
+.nxs_dropdown a:hover {background-color: #f1f1f1}
+.nxs_show {display:block;}
+/* End Dropdown menu */
+
+.subDiv{margin-left: 15px;}
+.nxs_hili {color:#008000;}
+/* 
+.clNewNTSets{width: 800px;} 
+#nsx_addNT {width: 600px;}
+*/
+.nxAccEdElem {width:92%;max-width: 510px;}
+.nxclear {clear: both;}
+
+.nxs_icon16 { font-size: 14px; line-height: 18px;
+    background-position: 3px 50% !important;
+    background-repeat: no-repeat !important;
+    display: inline-block;
+    padding: 1px 0 1px 23px !important;
+}
+
+.nxs_box{border-color: #DFDFDF; border-radius: 3px 3px 3px 3px; box-shadow: 0 1px 0 #FFFFFF inset; border-style: solid; border-width: 1px; line-height: 1; margin-bottom: 10px; padding: 0; /* max-width: 1080px; */}
+.nxs_box_header{border-bottom-color: #DFDFDF; box-shadow: 0 1px 0 #FFFFFF; text-shadow: 0 1px 0 #FFFFFF;font-size: 15px;font-weight: normal;line-height: 1;margin: 0;padding: 6px;
+background:#f1f1f1;background-image:-webkit-gradient(linear,left bottom,left top,from(#ececec),to(#f9f9f9));background-image:-webkit-linear-gradient(bottom,#ececec,#f9f9f9);background-image:-moz-linear-gradient(bottom,#ececec,#f9f9f9);background-image:-o-linear-gradient(bottom,#ececec,#f9f9f9);background-image:linear-gradient(to top,#ececec,#f9f9f9)
+-moz-user-select: none;border-bottom-style: solid;border-bottom-width: 1px;}
+.nxs_box_inside{line-height: 1.4em; padding: 10px;}
+.nxs_box_inside input[type=text]{ padding: 5px; height: 24px; border: 1px solid #ACACAC;}
+.nxs_box_inside .insOneDiv, #nsx_addNT .insOneDiv{max-width: 1020px; background-color: #f8f9f9; background-repeat: no-repeat; margin: 10px; border: 1px solid #808080; padding: 10px; display:none; overflow: hidden;}
+.nxs_box_inside .itemDiv {margin:5px;margin-left:10px;  overflow: hidden;}
+.nxs_box_header h3 {font-size: 14px; margin-bottom: 2px; margin-top: 2px;}
+.nxs_newLabel {font-size: 11px; color:red; padding-left: 5px; padding-right: 5px;}
+
+.nxs_prevImagesDiv {border:1px solid #0f3c6d;  width:110px; height:110px; margin:3px; padding:3px; text-align:center; float:left; position: relative;}
+.nxs_prevImages {padding:1px; max-height:100px; max-width:100px;}
+.nxs_chImg_selDiv {border:1px solid #800000;}
+.nxs_chImg_selImg {border:4px solid #800000;}
+.nxs_checkIcon{position: absolute;}
+
+.nxs_checkIcon{display:none; height:24px;width:24px;position:absolute;top:-7px;right:-7px;outline:0;border:1px solid #fff;border-radius:3px;box-shadow:0 0 0 1px rgba(0,0,0,0.4);background:#800000;background-image:-webkit-gradient(linear,left top,left bottom,from(#800000),to(#570000));background-image:-webkit-linear-gradient(top,#800000,#570000);background-image:-moz-linear-gradient(top,#800000,#570000);background-image:-o-linear-gradient(top,#800000,#570000);background-image:linear-gradient(to bottom,#800000,#570000)}
+.nxs_checkIcon{ top:-5px; right: -3px; width: 15px; height: 15px; box-shadow:0 0 0 1px #800000;background:#800000;background-image:-webkit-gradient(linear,left top,left bottom,from(#800000),to(#570000));background-image:-webkit-linear-gradient(top,#800000,#570000);background-image:-moz-linear-gradient(top,#800000,#570000);background-image:-o-linear-gradient(top,#800000,#570000);background-image:linear-gradient(to bottom,#800000,#570000)}
+.nxs_checkIcon div{background-position:-21px 0; width: 15px; height: 15px;}
+/* #nxsDivWrap .postbox .inside {overflow: hidden;}  */
+#nxsDivWrap .postbox .description {vertical-align: middle; color: #ACACAC;}  
+
+.nxsSvSettingsAjax, .doneMsg {color:#555; font-weight:bold; display: inline-block; font-size: 15px; display: none; margin-right: 50px;}
+
+.submitX {padding-top: 7px; padding-bottom: 5px;}
+
+  .nxspButton:hover { background-color: #1E1E1E;}
+  .nxspButton { background-color: #2B91AF; color: #FFFFFF; cursor: pointer; display: inline-block; text-align: center; text-decoration: none; border-radius: 6px 6px 6px 6px; box-shadow: none; font: bold 131% sans-serif; padding: 0 6px 2px; position: absolute; right: -7px; top: -7px;}
+  #nxs_spPopup, #nxs_spNTPopup, #nxs_gPopup, #nxs_spFltPopup, #nxs_popupDiv, #showLicForm, .nxsbPP{ min-height: 250px; max-width: 850px; z-index:999991; background-color: #FFFFFF; border-radius: 5px 5px 5px 5px;  box-shadow: 0 0 3px 2px #999999; color: #111111; display: none;  width:99%; padding: 25px;}
+  #nxs_gPopup {min-width: 650px;}
+  #nxs_gPopupContent {overflow-y: auto; overflow-x: auto;  max-width: 600px; max-height: 600px; min-height: 200px;}
+  #nxsNewSNPost .nxsNPLabel {position: relative;}
+  #nxsNewSNPost .nxsNPRow {position: relative; padding: 8px;}
+  #nxsNewSNPost input {position: relative; font-size: 16px;}
+  .nxsNPRow { display: inline-block; }
+  .nxsNPRowGroup { padding: 4px;}
+  .nxsNPRowLine { padding: 3px; font-size: 12px; padding-left: 16px;}
+  .nsx_iconedTitle {font-size: 17px; font-weight: bold; margin-bottom: 15px; padding-left: 20px; background-repeat: no-repeat; background-position: left center; /* height: 24px; */ cursor: context-menu; }
+  .nxsNPRowSm, .nxsNPRow .nsx_iconedTitle {font-size: 12px; }
+  .nxsNPLeft, .nxsNPRight {position: relative; float: left;}
+  .nxsNPLeft {width: 40%;} .nxsNPRight {width: 60%;}
+  .nxsLftPad {padding-left: 15px;}
+  #nxsAllAccntsDiv.loading { overflow: hidden; } #nxsAllAccntsDiv.loading .nxs_modal { display: block; }  
+
+/* ================================================================================================== */
+
+.nxsBlue {font-weight:bold;color:#064F97}
+.nxsGreen {font-weight:bold;color:#005800;}
+.nxsRed {font-weight:bold;color:#580000}
+
+
+/* iCheck plugin Line skin, blue
+----------------------------------- */
+.icheckbox_line-blue,
+.iradio_line-blue {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 5px 15px 5px 38px;
+    font-size: 13px;
+    line-height: 17px;
+    color: #fff;
+    background: #2489c5;
+    border: none;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+    .icheckbox_line-blue .icheck_line-icon,
+    .iradio_line-blue .icheck_line-icon {
+        position: absolute;
+        top: 50%;
+        left: 13px;
+        width: 13px;
+        height: 11px;
+        margin: -5px 0 0 0;
+        padding: 0;
+        overflow: hidden;
+        background: url(line.png) no-repeat;
+        border: none;
+    }
+    .icheckbox_line-blue.hover,
+    .icheckbox_line-blue.checked.hover,
+    .iradio_line-blue.hover {
+        background: #3DA0DB;
+    }
+    .icheckbox_line-blue.checked,
+    .iradio_line-blue.checked {
+        background: #2489c5;
+    }
+        .icheckbox_line-blue.checked .icheck_line-icon,
+        .iradio_line-blue.checked .icheck_line-icon {
+            background-position: -15px 0;
+        }
+    .icheckbox_line-blue.disabled,
+    .iradio_line-blue.disabled {
+        background: #ADD7F0;
+        cursor: default;
+    }
+        .icheckbox_line-blue.disabled .icheck_line-icon,
+        .iradio_line-blue.disabled .icheck_line-icon {
+            background-position: -30px 0;
+        }
+    .icheckbox_line-blue.checked.disabled,
+    .iradio_line-blue.checked.disabled {
+        background: #ADD7F0;
+    }
+        .icheckbox_line-blue.checked.disabled .icheck_line-icon,
+        .iradio_line-blue.checked.disabled .icheck_line-icon {
+            background-position: -45px 0;
+        }
+
+/* HiDPI support */
+@media (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+    .icheckbox_line-blue .icheck_line-icon,
+    .iradio_line-blue .icheck_line-icon {
+        background-image: url(line@2x.png);
+        -webkit-background-size: 60px 13px;
+        background-size: 60px 13px;
+    }
+}
+
+
+
+/* iCheck plugin Minimal skin, blue
+----------------------------------- */
+.icheckbox_minimal-blue,
+.iradio_minimal-blue {
+    display: inline-block;
+    *display: inline;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
+    width: 18px;
+    height: 18px;
+    background: url(blueX.png) no-repeat;
+    border: none;
+    cursor: pointer;
+}
+
+.icheckbox_minimal-blue {
+    background-position: 0 0;
+}
+    .icheckbox_minimal-blue.hover {
+        background-position: -20px 0;
+    }
+    .icheckbox_minimal-blue.checked {
+        background-position: -40px 0;
+    }
+    .icheckbox_minimal-blue.disabled {
+        background-position: -60px 0;
+        cursor: default;
+    }
+    .icheckbox_minimal-blue.checked.disabled {
+        background-position: -80px 0;
+    }
+
+.iradio_minimal-blue {
+    background-position: -100px 0;
+}
+    .iradio_minimal-blue.hover {
+        background-position: -120px 0;
+    }
+    .iradio_minimal-blue.checked {
+        background-position: -140px 0;
+    }
+    .iradio_minimal-blue.disabled {
+        background-position: -160px 0;
+        cursor: default;
+    }
+    .iradio_minimal-blue.checked.disabled {
+        background-position: -180px 0;
+    }
+
+/* HiDPI support */
+@media (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+    .icheckbox_minimal-blue,
+    .iradio_minimal-blue {
+        background-image: url(blue@2x.png);
+        -webkit-background-size: 200px 20px;
+        background-size: 200px 20px;
+    }
+}
+
+.manualPostBtn{display:inline-block;zoom:1;line-height:normal;white-space:nowrap;vertical-align:middle;text-align:center;cursor:pointer;-webkit-user-drag:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}.manualPostBtn::-moz-focus-inner{padding:0;border:0}.manualPostBtn{font-family:inherit;font-size:100%;padding:.5em 1em;color:#444;color:rgba(0,0,0,.8);border:1px solid #999;border:0 rgba(0,0,0,0);background-color:#E6E6E6;text-decoration:none;border-radius:2px}.manualPostBtn-hover,.manualPostBtn:hover,.manualPostBtn:focus{filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000', GradientType=0);background-image:-webkit-gradient(linear,0 0,0 100%,from(transparent),color-stop(40%,rgba(0,0,0,.05)),to(rgba(0,0,0,.1)));background-image:-webkit-linear-gradient(transparent,rgba(0,0,0,.05) 40%,rgba(0,0,0,.1));background-image:-moz-linear-gradient(top,rgba(0,0,0,.05) 0,rgba(0,0,0,.1));background-image:-o-linear-gradient(transparent,rgba(0,0,0,.05) 40%,rgba(0,0,0,.1));background-image:linear-gradient(transparent,rgba(0,0,0,.05) 40%,rgba(0,0,0,.1))}.manualPostBtn:focus{outline:0}.manualPostBtn-active,.manualPostBtn:active{box-shadow:0 0 0 1px rgba(0,0,0,.15) inset,0 0 6px rgba(0,0,0,.2) inset;border-color:#000\9}.manualPostBtn[disabled],.manualPostBtn-disabled,.manualPostBtn-disabled:hover,.manualPostBtn-disabled:focus,.manualPostBtn-disabled:active{border:0;background-image:none;filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);filter:alpha(opacity=40);-khtml-opacity:.4;-moz-opacity:.4;opacity:.4;cursor:not-allowed;box-shadow:none}.manualPostBtn-hidden{display:none}.manualPostBtn::-moz-focus-inner{padding:0;border:0}.manualPostBtn-primary,.manualPostBtn-selected,a.manualPostBtn-primary,a.manualPostBtn-selected{background-color:#0078e7;color:#fff}
+
+.manualPostBtn{display:inline-block;zoom:1;line-height:normal;white-space:nowrap;vertical-align:middle;text-align:center;cursor:pointer;-webkit-user-drag:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}.manualPostBtn::-moz-focus-inner{padding:0;border:0}
+
+.manualPostBtn{
+    color: white; border-radius: 4px; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); font-size: 11px; background: #9D9D9D; padding-top: 3px;
+}
+
+.nxsShowQmark {cursor: help; position: relative; bottom: -3px;}
+
+.dd-container {display:inline-block;}
+.dd-selected {color:black;}
+.dd-selected-text {line-height: 20px; color:black;}
+.dd-options {max-height: 500px;}
+
+/* Filters */
+.field_title { font-size: 14px; }
+
+.nxsSellItSmall {max-width: 100px; width: 100px;}
+
+.nxs_terms_leftPanel, .nxs_metas_leftPanel{ display: inline-block; width: 100px; vertical-align: top; }
+.nxs_terms_rightPanel, .nxs_metas_rightPanel{display: inline-block; clear: both; vertical-align: top;}
+.nxs_terms_leftPanel .nxs_remove_term_compare, .nxs_metas_leftPanel .nxs_remove_meta_compare{ margin-top: 16px; height: 30px; }
+
+div.nxs_short_field {
+    display: inline-block;
+    width: 30%;
+    min-width: 150px !important;
+    vertical-align: top;
+    margin-right: 10px;
+}
+
+div.nxs_medium_field {
+    display: inline-block;
+    vertical-align: top;
+    width: 45%;
+    min-width: 200px !important;
+    margin-right: 20px;
+}
+
+div.nxs_small_field {
+    display: inline-block;
+    vertical-align: top;
+    width: 15%;
+    margin-right: 10px;
+}
+
+div.nxs_medium_field_txn {
+    display: inline-block;
+    vertical-align: top;
+    width: 205px;
+    min-width: 200px !important;
+    margin-right: 20px;
+}
+div.nxs_mediumXL_field_txn {
+    display: inline-block;
+    vertical-align: top;
+    width: 305px;
+    min-width: 300px !important;
+    margin-right: 20px;
+}
+div.nxs_medium_field_txnNL {
+    display: block;
+    vertical-align: top;
+    width: 80%;
+    min-width: 300px !important;
+    margin-right: 20px;
+}
+
+div.nxs_shortXL_field {
+    display: inline-block;
+    width: 150px;
+    min-width: 100px !important;
+    vertical-align: top;
+    margin-right: 10px;
+}
+
+div.nxs_checkbox_field {
+    padding-top: 25px;
+}
+
+button#nxs_add_term_compare, button.nxs_remove_term_compare, button#nxs_add_meta_compare, button.nxs_remove_meta_compare, button#nxs_add_date_period, button.nxs_remove_date_period, button#nxs_add_date_abs_period, button.nxs_remove_date_abs_period {
+    height: 30px;
+    margin-top: 15px;
+}
+
+#nxs_date_metabox .nxs_checkbox_field .nxs-checkbox{
+    width: 35px;
+    height: 35px;
+}
+
+#nxs_date_metabox .nxs_checkbox_field .nxs-checkbox::before{
+    margin: -4px 0 0 -8px;
+    font-size: 45px;
+}
+
+#nxs_date_metabox h2 {
+    background-color: rgba(141, 141, 137, 0.21);
+}
+
+#poststuffPopup h3 {
+/*    background-color: #dbff8a; */ font-size: 18px;
+
+background: rgba(211,245,178,1);
+background: -moz-linear-gradient(-45deg, rgba(211,245,178,1) 0%, rgba(247,255,224,1) 100%);
+background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(211,245,178,1)), color-stop(100%, rgba(247,255,224,1)));
+background: -webkit-linear-gradient(-45deg, rgba(211,245,178,1) 0%, rgba(247,255,224,1) 100%);
+background: -o-linear-gradient(-45deg, rgba(211,245,178,1) 0%, rgba(247,255,224,1) 100%);
+background: -ms-linear-gradient(-45deg, rgba(211,245,178,1) 0%, rgba(247,255,224,1) 100%);
+background: linear-gradient(135deg, rgba(211,245,178,1) 0%, rgba(247,255,224,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3f5b2', endColorstr='#f7ffe0', GradientType=1 );
+}
+
+#poststuffPopup h4 {
+    font-size: 15px;
+}
+
+#nxs_spFltPopupX,  #nxs_spFltPopup .postbox{
+  border-color: #b5ea7c;    
+}
+
+/* NXS 3 Col Responsive Page Structure */
+.nxscontainer {
+   height: auto;
+   overflow: hidden;   
+}
+.nxsright {
+    width: 195px;
+    float: left;
+    padding: 5px;
+    font-size: 12px;
+    line-height: 14px;
+}
+.nxsleft {
+    float: none; 
+    padding: 5px;    
+    width: auto;
+    overflow: hidden;
+}
+
+.nxsHiLightBorder {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+}
+
+  
+
+.nxs_ldos {color: #0073aa; cursor: pointer;}
+
+.nxs_authPopup {display: block; position: absolute;top: 25px;left: 25px; width: 50%; height: 540px; max-width: 960px; padding: 0px; border: 6px solid #008000; background-color: white; z-index: 1002;}
+.nxs_authPopupIn {z-index: 1003; height: 475px; overflow: auto; padding: 10px;}
+.nxs_authPopupHdr { background-color: #008000; color: white; height: 24px; padding: 10px;}
+.nxs_authPopupClose { background-color: white; color: #008000; height: 24px; float: right; padding: 4px;}
+
+.nxsTeal {color:#008080}
+.nxsBlue {color:#025294}
+.nxsGreen {color:#005800}
+.nxsOrange {color:#FF8800}
+.nxsDarkRed {color:#800000}
+.nxsDarkOrange {color:#884900}
+
+pre { white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; }
+
+.nxsPostEd_ElemWrap { margin: 10px; padding: 0px; margin-top: 10px; clear: both; } 
+.nxsPostEd_ElemLabel { font-size: 14px; font-weight: bold; }
+.nxsPostEd_Elem { margin-left: 10px;  margin-top: 5px;}

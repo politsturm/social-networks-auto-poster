@@ -1,0 +1,5 @@
+#wpbody #nxs_spFltPopup, #wpcontent{
+    padding-top: 0;  
+    background-image: url('ptbg3.png'); background-repeat: no-repeat; background-position: right top; 
+    min-height: 500px; background-color: white;
+}
