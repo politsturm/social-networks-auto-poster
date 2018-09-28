@@ -79,7 +79,12 @@ if (!class_exists("nxs_class_SNAP_TG")) { class nxs_class_SNAP_TG {
 
       //## Attach Image
       if ($options['attchImg']=='1') {
-        $msg = '<a href="'.$imgURL.'">&#8205;</a>'.$msg;
+        $urlEnc = urlencode($message['url']);
+        $tgURL = 'https://t.me/iv?url='.$urlEnc.'&rhash=b73623e01a3870';
+        $msg = '<a href="'.$tgURL.'">&#8205;</a>'.$msg;
+
+        // Disabled because of Telegram instant view
+        //$msg = '<a href="'.$imgURL.'">&#8205;</a>'.$msg;
       }
 
       //## Make text inside first two '**' bold
