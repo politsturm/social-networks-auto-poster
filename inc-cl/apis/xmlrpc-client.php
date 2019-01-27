@@ -36,17 +36,17 @@
  * @version    1.7.4 7th September 2010
  * @author     Simon Willison
  * @link       http://scripts.incutio.com/xmlrpc/ Site/manual
- * 
- * Modified Nov 2014 by NextScripts.com to provide SSL compatiblity. 
+ *
+ * Modified Nov 2014 by NextScripts.com to provide SSL compatiblity.
  * Modified Oct 2016 by NextScripts.com - removed Server part due to PHP7 incompatibility.
  */
 
 class NXS_XMLRPC_Value
 {
-    var $data;
-    var $type;
+    public $data;
+    public $type;
 
-    function __construct($data, $type = false)
+    public function __construct($data, $type = false)
     {
         $this->data = $data;
         if (!$type) {
@@ -66,7 +66,7 @@ class NXS_XMLRPC_Value
         }
     }
 
-    function calculateType()
+    public function calculateType()
     {
         if ($this->data === true || $this->data === false) {
             return 'boolean';
@@ -103,7 +103,7 @@ class NXS_XMLRPC_Value
         }
     }
 
-    function getXml()
+    public function getXml()
     {
         // Return XML for this value
         switch ($this->type) {
@@ -150,7 +150,7 @@ class NXS_XMLRPC_Value
      * @param unknown_type $array
      * @return boolean
      */
-    function isStruct($array)
+    public function isStruct($array)
     {
         $expected = 0;
         foreach ($array as $key => $value) {
@@ -172,34 +172,34 @@ class NXS_XMLRPC_Value
  */
 class NXS_XMLRPC_Message
 {
-    var $message;
-    var $messageType;  // methodCall / methodResponse / fault
-    var $faultCode;
-    var $faultString;
-    var $methodName;
-    var $params;
+    public $message;
+    public $messageType;  // methodCall / methodResponse / fault
+    public $faultCode;
+    public $faultString;
+    public $methodName;
+    public $params;
 
     // Current variable stacks
-    var $_arraystructs = array();   // The stack used to keep track of the current array/struct
-    var $_arraystructstypes = array(); // Stack keeping track of if things are structs or array
-    var $_currentStructName = array();  // A stack as well
-    var $_param;
-    var $_value;
-    var $_currentTag;
-    var $_currentTagContents;
+    public $_arraystructs = array();   // The stack used to keep track of the current array/struct
+    public $_arraystructstypes = array(); // Stack keeping track of if things are structs or array
+    public $_currentStructName = array();  // A stack as well
+    public $_param;
+    public $_value;
+    public $_currentTag;
+    public $_currentTagContents;
     // The XML parser
-    var $_parser;
+    public $_parser;
 
-    function __construct($message)
+    public function __construct($message)
     {
         $this->message =& $message;
     }
 
-    function parse()
+    public function parse()
     {
         // first remove the XML declaration
         // merged from WP #10698 - this method avoids the RAM usage of preg_replace on very large messages
-        $header = preg_replace( '/<\?xml.*?\?'.'>/', '', substr($this->message, 0, 100), 1);
+        $header = preg_replace('/<\?xml.*?\?'.'>/', '', substr($this->message, 0, 100), 1);
         $this->message = substr_replace($this->message, $header, 0, 100);
         if (trim($this->message) == '') {
             return false;
@@ -235,11 +235,11 @@ class NXS_XMLRPC_Message
         return true;
     }
 
-    function tag_open($parser, $tag, $attr)
+    public function tag_open($parser, $tag, $attr)
     {
         $this->_currentTagContents = '';
         $this->currentTag = $tag;
-        switch($tag) {
+        switch ($tag) {
             case 'methodCall':
             case 'methodResponse':
             case 'fault':
@@ -257,15 +257,15 @@ class NXS_XMLRPC_Message
         }
     }
 
-    function cdata($parser, $cdata)
+    public function cdata($parser, $cdata)
     {
         $this->_currentTagContents .= $cdata;
     }
 
-    function tag_close($parser, $tag)
+    public function tag_close($parser, $tag)
     {
         $valueFlag = false;
-        switch($tag) {
+        switch ($tag) {
             case 'int':
             case 'i4':
                 $value = (int)trim($this->_currentTagContents);
@@ -344,11 +344,11 @@ class NXS_XMLRPC_Message
  */
 class NXS_XMLRPC_Request
 {
-    var $method;
-    var $args;
-    var $xml;
+    public $method;
+    public $args;
+    public $xml;
 
-    function __construct($method, $args)
+    public function __construct($method, $args)
     {
         $this->method = $method;
         $this->args = $args;
@@ -368,13 +368,12 @@ EOD;
         $this->xml .= '</params></methodCall>';
     }
 
-    function getLength()
+    public function getLength()
     {
-       
         return nxs_strLen($this->xml);
     }
 
-    function getXml()
+    public function getXml()
     {
         return $this->xml;
     }
@@ -389,20 +388,20 @@ EOD;
  */
 class NXS_XMLRPC_Client
 {
-    var $server;
-    var $port;
-    var $path;
-    var $scheme;
-    var $useragent;
-    var $response;
-    var $message = false;
-    var $debug = false;
-    var $timeout;
+    public $server;
+    public $port;
+    public $path;
+    public $scheme;
+    public $useragent;
+    public $response;
+    public $message = false;
+    public $debug = false;
+    public $timeout;
 
     // Storage place for an error message
-    var $error = false;
+    public $error = false;
 
-    function __construct($server, $path = false, $port = 80, $timeout = 25)
+    public function __construct($server, $path = false, $port = 80, $timeout = 25)
     {
         if (!$path) {
             // Assume we have been given a URL instead
@@ -425,7 +424,7 @@ class NXS_XMLRPC_Client
         $this->timeout = $timeout;
     }
 
-    function queryFS()
+    public function queryFS()
     {
         $args = func_get_args();
         $method = array_shift($args);
@@ -441,7 +440,7 @@ class NXS_XMLRPC_Client
         $this->headers['User-Agent']    = $this->useragent;
         //$this->headers['Content-Length']= $length;
 
-        foreach( $this->headers as $header => $value ) {
+        foreach ($this->headers as $header => $value) {
             $request .= "{$header}: {$value}{$r}";
         }
         $request .= $r;
@@ -514,7 +513,7 @@ class NXS_XMLRPC_Client
      * Set the query to send to the XML-RPC Server
      * @since 0.1.0
      */
-    function query()
+    public function query()
     {
         $args = func_get_args();
         $method = array_shift($args);
@@ -536,7 +535,7 @@ class NXS_XMLRPC_Client
         $curl=curl_init($this->scheme.'://' . $this->server . ':' . $this->port . $this->path);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
-        curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.44 Safari/537.36"); 
+        curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.44 Safari/537.36");
 
         //Since 23Jun2004 (0.1.2) - Made timeout a class field
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->timeout);
@@ -554,10 +553,15 @@ class NXS_XMLRPC_Client
         curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: text/xml"));
 
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-        global $nxs_skipSSLCheck; if ($nxs_skipSSLCheck===true) curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        global $nxs_skipSSLCheck;
+        if ($nxs_skipSSLCheck===true) {
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        }
 
         // Call cURL to do it's stuff and return us the content
-        $contents = curl_exec($curl); $err = curl_errno($curl); $errmsg = curl_error($curl); 
+        $contents = curl_exec($curl);
+        $err = curl_errno($curl);
+        $errmsg = curl_error($curl);
         curl_close($curl);
 
         // Check for 200 Code in $contents
@@ -574,7 +578,7 @@ class NXS_XMLRPC_Client
         // Since 20Jun2004 (0.1.1) - We need to remove the headers first
         // Why I have only just found this, I will never know...
         // So, remove everything before the first <
-        $contents = substr($contents,strpos($contents, '<'));
+        $contents = substr($contents, strpos($contents, '<'));
 
         $this->message = new NXS_XMLRPC_Message($contents);
         if (!$this->message->parse()) {
@@ -592,23 +596,23 @@ class NXS_XMLRPC_Client
         return true;
     }
     
-    function getResponse()
+    public function getResponse()
     {
         // methodResponses can only have one param - return that
         return $this->message->params[0];
     }
 
-    function isError()
+    public function isError()
     {
         return (is_object($this->error));
     }
 
-    function getErrorCode()
+    public function getErrorCode()
     {
         return $this->error->code;
     }
 
-    function getErrorMessage()
+    public function getErrorMessage()
     {
         return $this->error->message;
     }
@@ -623,16 +627,16 @@ class NXS_XMLRPC_Client
  */
 class NXS_XMLRPC_Error
 {
-    var $code;
-    var $message;
+    public $code;
+    public $message;
 
-    function __construct($code, $message)
+    public function __construct($code, $message)
     {
         $this->code = $code;
         $this->message = htmlspecialchars($message);
     }
 
-    function getXml()
+    public function getXml()
     {
         $xml = <<<EOD
 <methodResponse>
@@ -663,16 +667,17 @@ EOD;
  * @package IXR
  * @since 1.5
  */
-class NXS_XMLRPC_Date {
-    var $year;
-    var $month;
-    var $day;
-    var $hour;
-    var $minute;
-    var $second;
-    var $timezone;
+class NXS_XMLRPC_Date
+{
+    public $year;
+    public $month;
+    public $day;
+    public $hour;
+    public $minute;
+    public $second;
+    public $timezone;
 
-    function __construct($time)
+    public function __construct($time)
     {
         // $time can be a PHP timestamp or an ISO one
         if (is_numeric($time)) {
@@ -682,7 +687,7 @@ class NXS_XMLRPC_Date {
         }
     }
 
-    function parseTimestamp($timestamp)
+    public function parseTimestamp($timestamp)
     {
         $this->year = date('Y', $timestamp);
         $this->month = date('m', $timestamp);
@@ -693,7 +698,7 @@ class NXS_XMLRPC_Date {
         $this->timezone = '';
     }
 
-    function parseIso($iso)
+    public function parseIso($iso)
     {
         $this->year = substr($iso, 0, 4);
         $this->month = substr($iso, 4, 2);
@@ -704,17 +709,17 @@ class NXS_XMLRPC_Date {
         $this->timezone = substr($iso, 17);
     }
 
-    function getIso()
+    public function getIso()
     {
         return $this->year.$this->month.$this->day.'T'.$this->hour.':'.$this->minute.':'.$this->second.$this->timezone;
     }
 
-    function getXml()
+    public function getXml()
     {
         return '<dateTime.iso8601>'.$this->getIso().'</dateTime.iso8601>';
     }
 
-    function getTimestamp()
+    public function getTimestamp()
     {
         return mktime($this->hour, $this->minute, $this->second, $this->month, $this->day, $this->year);
     }
@@ -728,14 +733,14 @@ class NXS_XMLRPC_Date {
  */
 class NXS_XMLRPC_Base64
 {
-    var $data;
+    public $data;
 
-    function __construct($data)
+    public function __construct($data)
     {
         $this->data = $data;
     }
 
-    function getXml()
+    public function getXml()
     {
         return '<base64>'.base64_encode($this->data).'</base64>';
     }
@@ -749,15 +754,15 @@ class NXS_XMLRPC_Base64
  */
 class NXS_XMLRPC_ClientMulticall extends NXS_XMLRPC_Client
 {
-    var $calls = array();
+    public $calls = array();
 
-    function __construct($server, $path = false, $port = 80)
+    public function __construct($server, $path = false, $port = 80)
     {
         parent::__construct($server, $path, $port);
         $this->useragent = 'The Incutio XML-RPC PHP Library (multicall client)';
     }
 
-    function addCall()
+    public function addCall()
     {
         $args = func_get_args();
         $methodName = array_shift($args);
@@ -768,7 +773,7 @@ class NXS_XMLRPC_ClientMulticall extends NXS_XMLRPC_Client
         $this->calls[] = $struct;
     }
 
-    function query()
+    public function query()
     {
         // Prepare multicall, then call the parent::query() method
         return parent::query('system.multicall', $this->calls);
@@ -791,7 +796,7 @@ class NXS_XMLRPC_ClientSSL extends NXS_XMLRPC_Client
      * @since 0.1.0
      * @var string
      */
-    var $_certFile;
+    public $_certFile;
 
     /**
      * Filename of the SSL CA Certificate
@@ -799,7 +804,7 @@ class NXS_XMLRPC_ClientSSL extends NXS_XMLRPC_Client
      * @since 0.1.0
      * @var string
      */
-    var $_caFile;
+    public $_caFile;
 
     /**
      * Filename of the SSL Client Private Key
@@ -807,7 +812,7 @@ class NXS_XMLRPC_ClientSSL extends NXS_XMLRPC_Client
      * @since 0.1.0
      * @var string
      */
-    var $_keyFile;
+    public $_keyFile;
 
     /**
      * Passphrase to unlock the private key
@@ -815,14 +820,14 @@ class NXS_XMLRPC_ClientSSL extends NXS_XMLRPC_Client
      * @since 0.1.0
      * @var string
      */
-    var $_passphrase;
+    public $_passphrase;
 
     /**
      * Constructor
      * @param string $server URL of the Server to connect to
      * @since 0.1.0
      */
-    function __construct($server, $path = false, $port = 443, $timeout = false)
+    public function __construct($server, $path = false, $port = 443, $timeout = false)
     {
         parent::__construct($server, $path, $port, $timeout);
         $this->useragent = 'The Incutio XML-RPC PHP Library for SSL';
@@ -842,7 +847,7 @@ class NXS_XMLRPC_ClientSSL extends NXS_XMLRPC_Client
      * @param string $keyFile Filename of the client side certificate's private key
      * @param string $keyPhrase Passphrase to unlock the private key
      */
-    function setCertificate($certificateFile, $keyFile, $keyPhrase='')
+    public function setCertificate($certificateFile, $keyFile, $keyPhrase='')
     {
         // Check the files all exist
         if (is_file($certificateFile)) {
@@ -860,7 +865,7 @@ class NXS_XMLRPC_ClientSSL extends NXS_XMLRPC_Client
         $this->_passphrase=(string)$keyPhrase;
     }
 
-    function setCACertificate($caFile)
+    public function setCACertificate($caFile)
     {
         if (is_file($caFile)) {
             $this->_caFile = $caFile;
@@ -875,7 +880,7 @@ class NXS_XMLRPC_ClientSSL extends NXS_XMLRPC_Client
      * @returns void
      * @since 0.1.2
      */
-    function setTimeOut($newTimeOut)
+    public function setTimeOut($newTimeOut)
     {
         $this->timeout = (int)$newTimeOut;
     }
@@ -885,7 +890,7 @@ class NXS_XMLRPC_ClientSSL extends NXS_XMLRPC_Client
      * @returns int
      * @since 0.1.2
      */
-    function getTimeOut()
+    public function getTimeOut()
     {
         return $this->timeout;
     }
@@ -894,7 +899,7 @@ class NXS_XMLRPC_ClientSSL extends NXS_XMLRPC_Client
      * Set the query to send to the XML-RPC Server
      * @since 0.1.0
      */
-    function query()
+    public function query()
     {
         $args = func_get_args();
         $method = array_shift($args);
@@ -928,7 +933,7 @@ class NXS_XMLRPC_ClientSSL extends NXS_XMLRPC_Client
         curl_setopt($curl, CURLOPT_POSTFIELDS, $xml);
         curl_setopt($curl, CURLOPT_PORT, $this->port);
         //curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: text/xml","Content-length: {$length}"));
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: text/xml"));                                    
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: text/xml"));
 
         // Process the SSL certificates, etc. to use
         if (!($this->_certFile === false)) {
@@ -954,9 +959,14 @@ class NXS_XMLRPC_ClientSSL extends NXS_XMLRPC_Client
                 curl_setopt($curl, CURLOPT_CAINFO, $this->_caFile);
             }
         }
-        global $nxs_skipSSLCheck; if ($nxs_skipSSLCheck===true) curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        global $nxs_skipSSLCheck;
+        if ($nxs_skipSSLCheck===true) {
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        }
         // Call cURL to do it's stuff and return us the content
-        $contents = curl_exec($curl); $err = curl_errno($curl); $errmsg = curl_error($curl);
+        $contents = curl_exec($curl);
+        $err = curl_errno($curl);
+        $errmsg = curl_error($curl);
         curl_close($curl);
 
         // Check for 200 Code in $contents
@@ -973,7 +983,7 @@ class NXS_XMLRPC_ClientSSL extends NXS_XMLRPC_Client
         // Since 20Jun2004 (0.1.1) - We need to remove the headers first
         // Why I have only just found this, I will never know...
         // So, remove everything before the first <
-        $contents = substr($contents,strpos($contents, '<'));
+        $contents = substr($contents, strpos($contents, '<'));
 
         $this->message = new NXS_XMLRPC_Message($contents);
         if (!$this->message->parse()) {
@@ -991,5 +1001,3 @@ class NXS_XMLRPC_ClientSSL extends NXS_XMLRPC_Client
         return true;
     }
 }
-
-?>

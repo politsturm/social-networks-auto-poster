@@ -255,6 +255,3 @@ $HTML401NamedToNumeric = array(
     '&rsaquo;'   => '&#8250;', # single right-pointing angle quotation mark, U+203A ISO proposed
     '&euro;'     => '&#8364;', # euro sign, U+20AC NEW
 );
-
-
-?>
