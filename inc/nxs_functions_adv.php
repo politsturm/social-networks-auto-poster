@@ -11,7 +11,7 @@ if (!function_exists("nxs_snapAjax")) {
         }
         $networks = (!current_user_can('manage_options') && current_user_can('haveown_snap_accss')) ? $nxs_SNAP->nxs_acctsU : $nxs_SNAP->nxs_accts;
         $options =  $nxs_SNAP->nxs_options;
-   
+
         if ($_POST['nxsact']=='getNTset') {
             $ii = $_POST['ii'];
             $nt = $_POST['nt'];
@@ -66,7 +66,7 @@ if (!function_exists("nxs_snapAjax")) {
             $nxs_SNAP->saveNetworksOptions($networks);
             die('OK');
         }
-  
+
         if ($_POST['nxsact']=='nsDupl') {
             $indx = (int)$_POST['id'];
             $no = $networks[$_POST['nt']][$indx];
@@ -96,8 +96,8 @@ if (!function_exists("nxs_snapAjax")) {
                 echo "Done. ".$acnt.' accounts has been updated.';
             }
         }
-  
-  
+
+
         //############ Quick Post
         if ($_POST['nxsact']=='getNewPostDlg') {
             nxs_showNewPostForm($networks);
@@ -122,7 +122,7 @@ if (!function_exists("nxs_snapAjax")) {
                 $ntOpts = $networks[$ntA[0]][$ntA[1]];
                 $nts[] = $ntA[0].$ntA[1];
             }
-     
+
             if (!empty($_POST['qpid'])) {
                 $metaArrEx = get_post_meta($_POST['qpid'], '_nxs_snap_data', true);
                 $metaArr = array('posts'=>array(), 'nts'=>$nts, 'postType'=>$_POST['mType'], 'imgURL'=>$_POST['mImg'], 'linkURL'=>$_POST['mLink']);
@@ -156,8 +156,8 @@ if (!function_exists("nxs_snapAjax")) {
             $wpdb->delete($wpdb->prefix . "nxs_query", array( 'id' => $cid ));
             echo "== OK-".$cid;
         }
-  
-  
+
+
         //## Get somrhting (like Boards or Cats) from NT
         if ($_POST['nxsact']=='getItFromNT') {
             $ntU = strtoupper($_POST['nt']);
@@ -167,7 +167,7 @@ if (!function_exists("nxs_snapAjax")) {
             $ntObj->$fName($networks);
             die();
         }
-  
+
         if ($_POST['nxsact']=='testPost' || $_POST['nxsact']=='manPost') {
             $clName = 'nxs_snapClass'.strtoupper($_POST['nt']);
             $ntClInst = new $clName();
@@ -218,7 +218,7 @@ if (!function_exists("nxs_snapAjax")) {
                     global $wpdb;
                     $wpdb->query("DELETE FROM ". $wpdb->postmeta ." WHERE meta_key = 'snap_isRpstd".$pid."'");
                 }
-       
+
                 $stats = nxs_Filters::getStats($pid, '', $rpstrOpts);
                 if ($newReposter) {
                     die('OK');
@@ -229,10 +229,10 @@ if (!function_exists("nxs_snapAjax")) {
                 die('ERROR (PID)');
             }
         }
-   
+
         /////===============================
-    
-  
+
+
         if ($_POST['nxsact']=='svEdFlds') {
             $cn = str_replace(']', '', $_POST['cname']);
             $cna = explode('[', $cn);
@@ -254,7 +254,7 @@ if (!function_exists("nxs_snapAjax")) {
                 foreach ($posts as $post) {
                     $termsOut[] = array('value'=>$post->ID, 'text'=>$post->post_title);
                 }
-       
+
                 if (!empty($_POST['srch']) && intval($_POST['srch'])>0) {
                     $posts = get_posts(array('orderby'=>'title', 'post_status' => array( 'pending', 'publish', 'future' ), 'post_type' =>  'any', 'posts_per_page'=>100, 'post__in' => array(intval($_POST['srch']) )));
                     foreach ($posts as $post) {
@@ -301,7 +301,7 @@ if (!function_exists("nxs_snapAjax")) {
             }
             _e('Done. All SNAP data has been removed. Please wait for the page to reload....', 'social-networks-auto-poster-facebook-twitter-g');
         }
-  
+
         if ($_POST['nxsact']=='accsFltToAll') {
             foreach ($networks as $ntl => $nta) {
                 foreach ($nta as $ii => $ntAcc) {
@@ -312,7 +312,7 @@ if (!function_exists("nxs_snapAjax")) {
             $nxs_SNAP->saveNetworksOptions($networks);
             echo "Done";
         }
-  
+
         if ($_POST['nxsact']=='restBackup') {
             $dbNts = get_option('nxsSNAPNetworks_bck4');
             $dbOpts = get_option('nxsSNAPOptions_bck4');
@@ -685,7 +685,7 @@ if (!function_exists("nsFormatMessage")) {
                             if ($h) {
                                 $frmTag = trim(str_replace(' ', $htS, nxs_clean_string(trim(nxs_ucwords(str_ireplace('&', '', str_ireplace('&amp;', '', $frmTag)))))));
                             }
-          
+
                             $tggs[] = ($h?'#':'').$frmTag;
                         }
                         $cfItem = implode(' ', $tggs);
@@ -836,7 +836,7 @@ if (!function_exists("nxs_memCheck")) {
         $mLimit = empty($mLimit) ? __('N/A') :$mLimit . __(' MByte');
         $mUsageP = function_exists('memory_get_usage') ? round(memory_get_peak_usage() / 1024 / 1024, 2) : 0;
         $mUsageP = empty($mUsageP) ? __('N/A') : $mUsageP . __(' MByte');
-  
+
         $mUsage = function_exists('memory_get_usage') ? round(memory_get_usage() / 1024 / 1024, 2) : 0;
         $mUsage = empty($mUsage) ? __('N/A') : $mUsage . __(' MByte'); ?>
     <div><strong><?php _e('PHP Version'); ?></strong>: <span><?php echo PHP_VERSION; ?>;&nbsp;</span>

@@ -167,7 +167,7 @@ if (!class_exists('nxs_Http')) {
                 $r['headers']['cookie'] = $cookies_header;
             }
         }
-    
+
         private function stream_headers($handle, $headers)
         {
             $this->headers .= $headers;
@@ -270,7 +270,7 @@ if (!class_exists('nxs_Http')) {
                 $handle = $tt['ch'];
                 $r = $tt['r'];
             }
-        
+
             $theResponse = curl_exec($handle);
             $theBody = '';
             $theHeaders = nxs_Http::processHeaders($this->headers);
@@ -303,7 +303,7 @@ if (!class_exists('nxs_Http')) {
             }
             return array( 'headers' => $theHeaders['headers'], 'body' => $theBody, 'response' => $response, 'cookies' => $theHeaders['cookies'] );
         }
-          
+
         public static function make_absolute_url($maybe_relative_path, $url)
         {
             if (empty($url)) {
@@ -424,7 +424,7 @@ if (!class_exists('nxs_Http_Cookie')) {
                 $this->name  = $name;
                 $this->value = urldecode($value);
                 array_shift($pairs);
-            
+
                 foreach ($pairs as $pair) {
                     $pair = rtrim($pair);
                     if (empty($pair)) {

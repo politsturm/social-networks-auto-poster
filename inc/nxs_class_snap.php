@@ -14,7 +14,7 @@ if (!class_exists("nxs_SNAP")) {
         public $nxs_acctsU = "";
         public $sMode = array('s'=>'S', 'l'=>'F', 'u'=>'O', 'a'=>'S', 's'=>'S', 't'=>false);
         public $old_dbOptionsName = "NS_SNAutoPoster";
-        
+
         public function __construct($u='')
         {
             load_plugin_textdomain('social-networks-auto-poster-facebook-twitter-g', false, substr(dirname(plugin_basename(__FILE__)), 0, -4).'/lang/');
@@ -115,7 +115,7 @@ if (!class_exists("nxs_SNAP")) {
                update_site_option($l, $k);
            }
        }
-       
+
        if (defined('MULTISITE') && MULTISITE!=false) {
            $ntoptions = get_site_option('NS_SNAutoPoster');
            if (!empty($ntoptions)) {
@@ -190,7 +190,7 @@ if (!class_exists("nxs_SNAP")) {
                 update_option('nxsSNAPOptions_bck4', $this->nxs_options, false);
                 update_option('nxs_lBckTime', time(), false);
             }
-         
+
             //if (function_exists('nxs_getInitAdd')) nxs_getInitAdd($options); if (!empty($options['uk'])) $options['uk']='API';
             //if (defined('NXSAPIVER') && (empty($options['ukver']) || $options['ukver']!=NXSAPIVER)){$options['ukver']=NXSAPIVER; $this->saveNetworksOptions('',$options);}
             //## OG tags Update
@@ -223,14 +223,14 @@ if (!class_exists("nxs_SNAP")) {
             if ((int)$contCron>0) {
                 add_action('wp_head', 'nxs_contCron_js');
             }
-    
+
             //## CHeck for V4 API Update
             $g = get_site_option('nxs_v4APIMn');
             if (empty($g) && defined('NXSAPIVER') && stripos(NXSAPIVER, 'NXSID')===false && (int)substr(NXSAPIVER, 0, 1)<4 && function_exists('nxs_doChAPIU')) {
                 nxs_doChAPIU();
                 update_site_option('nxs_v4APIMn', 1);
             }
-    
+
             if (isset($_GET['page']) && $_GET['page']=='nxs-help' && isset($_GET['do']) && $_GET['do']=='test') {
                 error_reporting(E_ALL);
                 ini_set('error_reporting', E_ALL);
@@ -300,7 +300,7 @@ if (!class_exists("nxs_SNAP")) {
                 update_option($this->dbOptionsName, $this->nxs_options, false);
             }
         }
-  
+
         public function showUsersSitesMUTab()
         {
             global $nxs_snapAvNts;
@@ -339,7 +339,7 @@ if (!class_exists("nxs_SNAP")) {
 &nbsp;&nbsp;<a style="font-size: 14px;" onclick="nxs_saveSiteSets('A', 'O');return false;" href="#">[Set "Regular Mode" on all sites]</a>
 &nbsp;&nbsp;<a style="font-size: 14px;" onclick="nxs_saveSiteSets('A', 'D');return false;" href="#">[Disable SNAP on all sites]</a><?php
         }
-        
+
         public function showAccountsTab()
         {
             global $nxs_snapAvNts, $nxsOne;
@@ -392,7 +392,7 @@ if (!class_exists("nxs_SNAP")) {
                     }
                 }
             }
-       
+
             // $networks = !empty($this->nxs_acctsU)?$this->nxs_acctsU:$this->nxs_accts; $options = $this->nxs_options; $isNoNts = true;  - Something wierd! Why would we show default/admin if iuser has no accounts?
             $networks = (!current_user_can('manage_options') && current_user_can('haveown_snap_accss')) ? $this->nxs_acctsU : $this->nxs_accts;
             $options = $this->nxs_options;
@@ -414,7 +414,7 @@ if (!class_exists("nxs_SNAP")) {
                 $networks=$nt2;
                 $this->saveNetworksOptions($nt2);
             }
-    
+
             foreach ($nxs_snapAvNts as $avNt) {
                 if (isset($networks[$avNt['lcode']]) && is_array($networks[$avNt['lcode']]) && count($networks[$avNt['lcode']])>0) {
                     $isNoNts = false;
@@ -542,7 +542,7 @@ if (!class_exists("nxs_SNAP")) {
       <input type="hidden" value="1" name="upload_NS_SNAutoPoster_settings" /> <input value="'" type="hidden" name="nxs_mqTest" /> <input value="0" type="hidden" name="nxs_doAccMrg" id="nxs_doAccMrg"/>  <?php wp_nonce_field('nxsChkUpl', 'nxsChkUpl_wpnonce'); ?> 
     </form><?php // prr($networks);
         }
-        
+
         public function showSettingsTab($useSec=true)
         {
             global $nxs_snapAvNts, $snap_curPageURL, $nxs_snapThisPageUrl, $nxsOne, $nxs_isWPMU, $nxs_tpWMPU;
@@ -714,7 +714,7 @@ if (!class_exists("nxs_SNAP")) {
                 }
                 echo '<br/>';
             }
-    
+
             if (function_exists('showSNAP_WPMU_OptionsPageExt')) {
                 ?>    
     
@@ -1109,7 +1109,7 @@ if (!class_exists("nxs_SNAP")) {
               <div class="itemDiv"> <?php
                 $ogMsgT =  __('plugin has been detected', 'social-networks-auto-poster-facebook-twitter-g').' '.__('It has support for OG Metatags. Please disable SNAP OG Tags to avoid conflicts.', 'social-networks-auto-poster-facebook-twitter-g');
             $ogMsg = '';
-                
+
             if (function_exists('wpfbogp_start_ob')) {
                 $ogMsg = '"WP Facebook Open Graph protocol"';
             }
@@ -1122,7 +1122,7 @@ if (!class_exists("nxs_SNAP")) {
             if (function_exists('sfogi_wp_head')) {
                 $ogMsg = '"Simple Facebook OG image"';
             }
-                
+
             if (class_exists('Ngfb')) {
                 $ogMsg = '"NextGEN Facebook"';
             }
@@ -1141,7 +1141,7 @@ if (!class_exists("nxs_SNAP")) {
             if (class_exists('OpenGraphMetabox')) {
                 $ogMsg = '"Open Graph Metabox"';
             }
-                
+
             if (function_exists('wpseo_auto_load')) {
                 $ogMsg = '"Yoast SEO"';
             }
@@ -1151,8 +1151,8 @@ if (!class_exists("nxs_SNAP")) {
             if (function_exists('the_seo_framework_pre_load')) {
                 $ogMsg = '"The SEO Framework"';
             }
-                
-                
+
+
             if (!empty($ogMsg)) {
                 echo '<div style="color:darkred;">'.$ogMsg.' '.$ogMsgT.'</div></br>';
             } ?>
@@ -1367,7 +1367,7 @@ if (!class_exists("nxs_SNAP")) {
             
             <?php
         }
-        
+
         public function showLogHistoryTab()
         {
             global $nxs_snapAvNts, $nxsOne, $nxs_isWPMU, $nxs_tpWMPU;
@@ -1505,13 +1505,13 @@ if (!class_exists("nxs_SNAP")) {
             } else {
                 _e('Query is empty', 'social-networks-auto-poster-facebook-twitter-g');
             } //prr($quPosts);
-      
+
       ?>
       
     </div>        
         <?php
         }
-        
+
         public function showAboutTab()
         {
             global $nxs_snapAvNts, $nxs_snapThisPageUrl, $nxsOne, $nxs_isWPMU, $nxs_tpWMPU;
@@ -1637,7 +1637,7 @@ if (!class_exists("nxs_SNAP")) {
         </div>
     </div><?php
         }
-        
+
         public function NS_SNAP_AddPostMetaTags()
         {
             global $post, $nxs_snapAvNts;
@@ -1809,7 +1809,7 @@ if (!class_exists("nxs_SNAP")) {
                               if (empty($pbo[$ntClInst->ntInfo['lcode'].'OK'])) {
                                   continue;
                               }
-                     
+
                               if (!empty($pbo['fltrsOn']) && $pbo['fltrsOn'] == '1') {
                                   if (empty($pbo['fltrs'])) {
                                       $pbo['fltrs'] = array();
@@ -1824,12 +1824,12 @@ if (!class_exists("nxs_SNAP")) {
                               } else {
                                   $fltPostTypeExcl = false;
                               }
-                                      
+
                               $pbo['hideMe'] = $options['hideUnchecked'] && (empty($pbo['do']) || $fltPostTypeExcl);
                               if (!$pbo['hideMe']) {
                                   $jj++;
                               }
-                     
+
                               $pbo['jj']=$jj;
                               $pbo['cbo']=$cbo;
                               $ntClInst->showEditNTLine($indx, $pbo, $post);
@@ -1986,8 +1986,8 @@ if (!class_exists("nxs_SNAP")) {
           }
       }
   }
-        
-  
+
+
         public function setSettingsFromPOST()
         {
             $options = $this->nxs_options;
@@ -2032,7 +2032,7 @@ if (!class_exists("nxs_SNAP")) {
             if (isset($pvData['featImgLocArrPath'])) {
                 $options['featImgLocArrPath'] = $pvData['featImgLocArrPath'];
             }
-            
+
             if (isset($pvData['errNotifEmailCB'])) {
                 $options['errNotifEmailCB'] = 1;
             } else {
@@ -2041,13 +2041,13 @@ if (!class_exists("nxs_SNAP")) {
             if (isset($pvData['errNotifEmail'])) {
                 $options['errNotifEmail'] = $pvData['errNotifEmail'];
             }
-            
+
             if (isset($pvData['forceBrokenCron'])) {
                 $options['forceBrokenCron'] = 1;
             } else {
                 $options['forceBrokenCron'] = 0;
             }
-            
+
             if (isset($pvData['nxsURLShrtnr'])) {
                 $options['nxsURLShrtnr'] = $pvData['nxsURLShrtnr'];
             }
@@ -2057,7 +2057,7 @@ if (!class_exists("nxs_SNAP")) {
             if (isset($pvData['bitlyAPIKey'])) {
                 $options['bitlyAPIKey'] = $pvData['bitlyAPIKey'];
             }
-            
+
             if (isset($pvData['adflyUname'])) {
                 $options['adflyUname'] = $pvData['adflyUname'];
             }
@@ -2067,25 +2067,25 @@ if (!class_exists("nxs_SNAP")) {
             if (isset($pvData['adflyDomain'])) {
                 $options['adflyDomain'] = $pvData['adflyDomain'];
             }
-            
+
             if (isset($pvData['YOURLSKey'])) {
                 $options['YOURLSKey'] = $pvData['YOURLSKey'];
             }
             if (isset($pvData['YOURLSURL'])) {
                 $options['YOURLSURL'] = $pvData['YOURLSURL'];
             }
-            
+
             if (isset($pvData['clkimAPIKey'])) {
                 $options['clkimAPIKey'] = $pvData['clkimAPIKey'];
             }
             if (isset($pvData['postAPIKey'])) {
                 $options['postAPIKey'] = $pvData['postAPIKey'];
             }
-                        
+
             if (isset($pvData['gglAPIKey'])) {
                 $options['gglAPIKey'] = $pvData['gglAPIKey'];
             }
-            
+
             if (isset($pvData['fltrs'])) {
                 $options = nxs_adjFilters($pvData['fltrs'][0], $options);
             }
@@ -2094,7 +2094,7 @@ if (!class_exists("nxs_SNAP")) {
             } else {
                 $options['fltrsOn'] = 0;
             }
-            
+
             if (!isset($options['nxsURLShrtnr'])) {
                 $options['nxsURLShrtnr'] = 'G';
             }
@@ -2107,14 +2107,14 @@ if (!class_exists("nxs_SNAP")) {
             if ($options['nxsURLShrtnr']=='A' && (trim($pvData['adflyAPIKey'])=='' || trim($pvData['adflyAPIKey'])=='')) {
                 $options['nxsURLShrtnr'] = 'G';
             }
-            
+
             if ($options['nxsURLShrtnr']=='C' && trim($pvData['clkimAPIKey'])=='') {
                 $options['nxsURLShrtnr'] = 'G';
             }
             if ($options['nxsURLShrtnr']=='P' && trim($pvData['postAPIKey'])=='') {
                 $options['nxsURLShrtnr'] = 'G';
             }
-            
+
             if (isset($pvData['forceSURL'])) {
                 $options['forceSURL'] = 1;
             } else {
@@ -2140,12 +2140,12 @@ if (!class_exists("nxs_SNAP")) {
             } else {
                 $options['numOfTasks'] = 30;
             }
-            
+
             $numQU = intval($options['queryInterval']);
             if (!is_numeric($numQU) || ($numQU < 30 || $numQU > 600)) {
                 $options['queryInterval'] = 60;
             }
-            
+
             if (isset($pvData['nsOpenGraph'])) {
                 $options['nsOpenGraph'] = $pvData['nsOpenGraph'];
             } else {
@@ -2156,7 +2156,7 @@ if (!class_exists("nxs_SNAP")) {
             } else {
                 $options['nxsOG'] = 'N';
             }
-            
+
             if (isset($pvData['imgNoCheck'])) {
                 $options['imgNoCheck'] = 0;
             } else {
@@ -2167,7 +2167,7 @@ if (!class_exists("nxs_SNAP")) {
             } else {
                 $options['useForPages'] = 0;
             }
-                        
+
             if (isset($pvData['showPrxTab'])) {
                 $options['showPrxTab'] = 1;
             } else {
@@ -2178,7 +2178,7 @@ if (!class_exists("nxs_SNAP")) {
             } else {
                 $options['useRndProxy'] = 0;
             }
-            
+
             if (!empty($pvData['showNTListCats'])) {
                 $options['showNTListCats'] = 1;
             } else {
@@ -2187,23 +2187,23 @@ if (!class_exists("nxs_SNAP")) {
             if (!empty($pvData['howToShowNTS'])) {
                 $options['howToShowNTS'] = $pvData['howToShowNTS'];
             }
-            
+
             if (isset($pvData['prxList'])) {
                 $options['prxList'] = $pvData['prxList'];
             }
             if (isset($pvData['addURLParams'])) {
                 $options['addURLParams'] = $pvData['addURLParams'];
             }
-            
+
             if (isset($pvData['tagsExclFrmHT'])) {
                 $options['tagsExclFrmHT'] = $pvData['tagsExclFrmHT'];
             }
-            
-            
+
+
             if (isset($pvData['forcessl'])) {
                 $options['forcessl'] = $pvData['forcessl'];
             }
-            
+
             if (isset($pvData['riActive'])) {
                 $options['riActive'] = 1;
             } else {
@@ -2215,7 +2215,7 @@ if (!class_exists("nxs_SNAP")) {
             if (isset($pvData['riHowOften'])) {
                 $options['riHowOften'] = $pvData['riHowOften'];
             }
-            
+
             if (isset($pvData['useUnProc'])) {
                 $options['useUnProc'] = $pvData['useUnProc'];
             } else {
@@ -2227,7 +2227,7 @@ if (!class_exists("nxs_SNAP")) {
                 $cpTypes = array();
             }
             $options['nxsCPTSeld'] = serialize($cpTypes);
-            
+
             if (!isset($pvData['whoCanSeeSNAPBox'])) {
                 $pvData['whoCanSeeSNAPBox'] = array();
             }
@@ -2242,7 +2242,7 @@ if (!class_exists("nxs_SNAP")) {
             if (isset($pvData['whoCanMakePosts'])) {
                 $options['whoCanMakePosts'] = $pvData['whoCanMakePosts'];
             }
-            
+
             if (!isset($pvData['whoCanHaveOwnSNAPAccs'])) {
                 $pvData['whoCanHaveOwnSNAPAccs'] = array();
             }
@@ -2250,7 +2250,7 @@ if (!class_exists("nxs_SNAP")) {
             if (isset($pvData['whoCanHaveOwnSNAPAccs'])) {
                 $options['whoCanHaveOwnSNAPAccs'] = $pvData['whoCanHaveOwnSNAPAccs'];
             }
-            
+
             if (isset($pvData['skipSecurity'])) {
                 $options['skipSecurity'] = 1;
             } else {
@@ -2261,25 +2261,25 @@ if (!class_exists("nxs_SNAP")) {
             } else {
                 $options['zeroUser'] = 0;
             }
-            
+
             if (isset($pvData['hideUnchecked'])) {
                 $options['hideUnchecked'] = 1;
             } else {
                 $options['hideUnchecked'] = 0;
             }
-            
-            
+
+
             if (isset($pvData['quLimit'])) {
                 $options['quLimit'] = 1;
             } else {
                 $options['quLimit'] = 0;
             }
-            
+
             //## Query has been activated
             $isTimeChanged = ((isset($pvData['quDays']) && isset($options['quDays']) && $pvData['quDays']!=$options['quDays']) || (!isset($options['quDays']) && !empty($pvData['quDays']))) ||
                 ((isset($pvData['quHrs']) && isset($options['quHrs']) && $pvData['quHrs']!=$options['quHrs']) || (!isset($options['quHrs']) && !empty($pvData['quHrs']))) ||
                 ((isset($pvData['quMins']) && isset($options['quMins']) && $pvData['quMins']!=$options['quMins']) || (!isset($options['quMins']) && !empty($pvData['quMins'])));
-              
+
             if (isset($pvData['nxsOverLimit'])) {
                 $options['nxsOverLimit'] = $pvData['nxsOverLimit'];
             }
@@ -2301,7 +2301,7 @@ if (!class_exists("nxs_SNAP")) {
             } else {
                 $options['quMins'] = 0;
             }
-            
+
             if ($isTimeChanged) {
                 $currTime = time() + (get_option('gmt_offset') * HOUR_IN_SECONDS);
                 $pstEvrySec = $options['quDays']*86400+$options['quHrs']*3600+$options['quMins']*60;
@@ -2310,17 +2310,17 @@ if (!class_exists("nxs_SNAP")) {
                 $nxs_SNAP->nxs_options = $options;
                 nxs_recountQueryTimes();
             }
-            
-            
+
+
             if (isset($pvData['rpstActive'])) {
                 $options['rpstActive'] = 1;
             } else {
                 $options['rpstActive'] = 0;
             }      //     prr($options);
-            
+
 //            $options = nxs_adjRpst($options, $pvData);
-            
-            
+
+
             if (!empty($nxs_isWPMU) && $nxs_isWPMU && (!isset($options['suaMode'])||$options['suaMode'] == '')) {
                 $options['suaMode'] = $nxs_tpWMPU;
             }
@@ -2331,7 +2331,7 @@ if (!class_exists("nxs_SNAP")) {
                 $role->remove_cap('make_snap_posts');
                 $role->remove_cap('haveown_snap_accss');
             }
-            
+
             foreach ($options['whoCanSeeSNAPBox'] as $uRole) {
                 $role = get_role($uRole);
                 $role->add_cap('see_snap_box');
@@ -2395,13 +2395,13 @@ class nxs_ReposterListTable extends WP_List_Table
                 return print_r($item, true); //Show the whole array for troubleshooting purposes
         }
     }
-    
+
     public function column_cb($item)
     {
         return sprintf(
             '<input type="checkbox" name="%1$s[]" value="%2$s" />',
             /*$1%s*/ $this->_args['singular'],  //Let's simply repurpose the table's singular label ("movie")
-            /*$2%s*/ 
+            /*$2%s*/
             $item->ID                //The value of the checkbox should be the record's id
         );
     }
@@ -2416,7 +2416,7 @@ class nxs_ReposterListTable extends WP_List_Table
             'edit'      => sprintf('<a href="?page=%s&action=%s&item=%s">Edit</a>', $_REQUEST['page'], 'edit', $item->ID),
             'delete'    => sprintf('<a href="?page=%s&action=%s&item=%s">Delete</a>', $_REQUEST['page'], 'delete', $item->ID),
         );
-        
+
         $grOptions = maybe_unserialize(get_post_meta($item->ID, 'nxs_rpstr_data', true));
         if (!empty($grOptions)) {
             $grOptions['fullreturn'] = 1;
@@ -2441,7 +2441,7 @@ class nxs_ReposterListTable extends WP_List_Table
     {
         return $this->fltsInfo['i']; /* ."<pre>".print_r($this->fltsInfo, true)."</pre>"; */
     }
-    
+
     public function column_nextdate($item)
     {
         $gr2Options = maybe_unserialize(get_post_meta($item->ID, 'nxs_rpstr', true)); //prr($gr2Options);
@@ -2451,7 +2451,7 @@ class nxs_ReposterListTable extends WP_List_Table
         }
         return 'n/a';
     }
-    
+
     public function get_sortable_columns()
     {
         $sortable_columns = array(
@@ -2526,7 +2526,7 @@ class nxs_ReposterListTable extends WP_List_Table
             return ($order==='asc') ? $result : -$result; //Send final sort direction to usort
         }
         usort($data, 'usort_reorder');
-       
+
         $current_page = $this->get_pagenum();
         $total_items = count($data);
         $data = array_slice($data, (($current_page-1)*$per_page), $per_page);
@@ -2585,22 +2585,22 @@ class nxs_QPListTable extends WP_List_Table
         return sprintf(
             '<input type="checkbox" name="%1$s[]" value="%2$s" />',
             /*$1%s*/ $this->_args['singular'],  //Let's simply repurpose the table's singular label ("movie")
-            /*$2%s*/ 
+            /*$2%s*/
             $item->ID                //The value of the checkbox should be the record's id
         );
     }
-    
+
     public function column_summary($item)
     {
         $outTxt = '';
         $snapData = maybe_unserialize(get_post_meta($item->ID, '_nxs_snap_data', true));
         $info = new nxs_snapPostResults($snapData['posts']);
-        
+
         $outTxt .= $info->summary;
-        
+
         return $outTxt;
     }
-    
+
     public function column_author($item)
     {
         return get_the_author_meta('display_name', $item->post_author);
@@ -2687,7 +2687,7 @@ class nxs_QPListTable extends WP_List_Table
             'order'        => ! empty($_REQUEST['order']) && '' != $_REQUEST['order'] ? $_REQUEST['order'] : 'desc'
         ));
     }
-    
+
     public function display()
     {
         wp_nonce_field('ajax-custom-list-nonce', '_ajax_custom_list_nonce');

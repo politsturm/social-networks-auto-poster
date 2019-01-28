@@ -7,7 +7,7 @@ class nxs_Filters
     public static $post_formats;
     public static $taxonomies;
     public $filterText;
-        
+
     public function __construct()
     {
         //add_action( 'init',                  array( __CLASS__, 'create_filter' ) );
@@ -15,7 +15,7 @@ class nxs_Filters
         add_action('admin_head', array( __CLASS__, 'init' ));
         add_action('admin_enqueue_scripts', array( __CLASS__, 'enqueue' ));
     }
-    
+
     public static function init($od=false)
     {
         if (function_exists('get_current_screen')) {
@@ -30,19 +30,19 @@ class nxs_Filters
             self::$posts_types[] = 'nxs_qp';
             self::$posts_types[] = 'BuddyPress_Activity';
             natsort(self::$posts_types);
-            
+
             $builtin_taxonomies       = get_taxonomies(array( 'public' => true, '_builtin' => true ));
             $custom_taxonomies        = get_taxonomies(array( 'public' => true, '_builtin' => false ));
             $builtin_taxonomies2       = get_taxonomies(array( 'public' => false, '_builtin' => true ));
             $custom_taxonomies2        = get_taxonomies(array( 'public' => false, '_builtin' => false ));
             self::$taxonomies         = array_merge($builtin_taxonomies, $custom_taxonomies, $builtin_taxonomies2, $custom_taxonomies2);
             natsort(self::$taxonomies);
-            
+
             // self::$posts = get_posts( array( 'post_type' => self::$posts_types, 'numberposts' => -1, 'post_status' => 'any' ) ); prr(self::$posts); prr(self::$posts_types);  WTF?????? Retreiving all posts in init?????
             self::$post_formats = get_theme_support('post-formats'); // prr(self::$post_formats);
         }
     }
-    
+
     public static function showEdit($pg)
     {
         add_meta_box('nxs_title_metabox', __('Title and Options', 'social-networks-auto-poster-facebook-twitter-g'), array( __CLASS__, 'print_title_metabox' ), $pg, 'normal', 'high');
@@ -50,7 +50,7 @@ class nxs_Filters
         add_meta_box('nxs_network_metabox', __('Where to post (Network Selection)', 'social-networks-auto-poster-facebook-twitter-g'), array( __CLASS__, 'print_networks_metabox' ), $pg, 'normal', 'high');
         add_meta_box('nxs_posts_metabox', __('What to post (Posts, Pages, etc.. selection)', 'social-networks-auto-poster-facebook-twitter-g'), array( __CLASS__, 'print_posts_metabox' ), $pg, 'normal', 'high');
     }
-    
+
     public static function enqueue()
     {
         if (function_exists('get_current_screen')) {
@@ -93,7 +93,7 @@ class nxs_Filters
                     'nxs_term_children',
                     'nxs_types_starting_abs_period',
                     'nxs_types_end_abs_period' ),
-                
+
                 'list_input_ids' => array(
                     'nxs_starting_period',
                     'nxs_end_period'
@@ -102,7 +102,7 @@ class nxs_Filters
             wp_localize_script('jquery', 'nxs', $data);
         }
     }
-    
+
     public static function create_filter()
     {
         $labels = array(
@@ -118,7 +118,7 @@ class nxs_Filters
             'not_found_in_trash' => __('Filter not found in trash', 'social-networks-auto-poster-facebook-twitter-g'),
             'menu_name'          => __('Filters', 'social-networks-auto-poster-facebook-twitter-g')
         );
-        
+
         $args = array(
             'labels'    => $labels,
             'show_ui'   => false,
@@ -128,9 +128,9 @@ class nxs_Filters
             'capabilities' => array(
           //       'create_posts' => false, // Removes support for the "Add New" function
             )
-            
+
         );
-        
+
         register_post_type('nxs_filter', $args);
     }
 
@@ -146,7 +146,7 @@ class nxs_Filters
         if (!current_user_can('edit_post', $post_id)) {
             return $post_id;
         }
-        
+
         if (get_post_type($post_id) === 'nxs_filter') {
             //## Add New Cats and Tags
             if (!empty($pvData['nxs_cats_names'])) {
@@ -193,17 +193,17 @@ class nxs_Filters
                 }
                 $pvData['nxs_tags_names'] = $toIns; // prr($toIns);
             }
-        
+
             $count_compares          = !empty($pvData['nxs_count_meta_compares'])?intval($pvData['nxs_count_meta_compares']):0;
             $count_term_compares     = !empty($pvData['nxs_count_term_compares'])?intval($pvData['nxs_count_term_compares']):0;
             $count_date_periods      = !empty($pvData['nxs_count_date_periods'])?intval($pvData['nxs_count_date_periods']):0;
             $count_date_abs_periods  = !empty($pvData['nxs_count_abs_periods'])?intval($pvData['nxs_count_abs_periods']):0;
-            
+
             $settings = array( 'name_post', 'name_page', 'name_parent', 'post_status', 'post_type', 'post_formats', 'ie_tags_names', 'ie_cats_names', 'tags_names', 'cats_names', 'user_names', 'langs', 'post_ids', 'search_keywords', 'pagination', 'post_per_page', 'sticky_post', 'paged', 'post_per_archive_page', 'offset', 'order', 'order_by', 'year', 'month', 'day', 'hour', 'minute', 'second', 'permission', 'cache_results', 'cache_meta', 'cache_term', 'count_compares', 'term_children', 'term_operator', 'term_names', 'tax_names', 'term_relation', 'count_term_compares', 'starting_period', 'end_period', 'inclusive', 'count_date_periods', 'count_abs_periods', 'starting_abs_period', 'end_abs_period', 'types_starting_abs_period', 'types_end_abs_period', 'NPNts' );
-            
+
             $setToSave = array();
             $pval = $pvData;
-            
+
             //## Unset supplemental fields.
             if (isset($pvData['nxs_term_children']) && empty($pvData['nxs_term_names'])) {
                 unset($pvData['nxs_term_children']);
@@ -215,7 +215,7 @@ class nxs_Filters
                 unset($pvData['nxs_term_relation']);
             }
             // if (isset($pvData['nxs_count_term_compares']) && empty($pvData['nxs_term_names'])) unset($pvData['nxs_count_term_compares']);
-            
+
             //## Post_Meta
             if (!empty($pval['nxs_count_meta_compares'])) {
                 $setToSave['nxs_count_meta_compares'] = $pval['nxs_count_meta_compares'];
@@ -258,21 +258,21 @@ class nxs_Filters
                 $pm['relation'] = 'AND';
                 $setToSave['post_meta'][] = $pm;
             }
-            
+
             $setToSave['nxs_count_meta_compares'] = !empty($setToSave['post_meta'])?count($setToSave['post_meta']):0;
-            
+
             if (isset($pvData['nxs_count_date_periods']) && empty($pvData['nxs_end_period']) && empty($pvData['nxs_starting_period'])) {
                 unset($pvData['nxs_count_date_periods']);
             }
             if (isset($pvData['nxs_inclusive']) && empty($pvData['nxs_end_period']) && empty($pvData['nxs_starting_period'])) {
                 unset($pvData['nxs_inclusive']);
             }
-            
+
             //## If Taxonomy name is set and value is not - remove it
             if (isset($pvData['nxs_tax_names']) && empty($pvData['nxs_term_names'])) {
                 unset($pvData['nxs_tax_names']);
             }
-            
+
             if (!empty($pvData['nxs_term_names']) && !empty($pvData['nxs_tax_names']) && is_array($pvData['nxs_term_names'])) {
                 $outT = array();
                 foreach ($pvData['nxs_term_names'] as $g) {
@@ -286,14 +286,14 @@ class nxs_Filters
                 }
                 $pvData['nxs_term_names'] = $outT;
             }
-            
+
             if ($count_term_compares > 1) {
                 for ($j = 2; $j <= $count_term_compares; $j++) {
                     $settings[] = 'term_children_' .$j;
                     $settings[] = 'term_operator_' .$j;
                     $settings[] = 'term_names_' .$j;
                     $settings[] = 'tax_names_' .$j;
-                    
+
                     if (!empty($pvData['nxs_term_names_' .$j]) && !empty($pvData['nxs_tax_names_' .$j]) && is_array($pvData['nxs_term_names_' .$j])) {
                         $outT = array();
                         foreach ($pvData['nxs_term_names_' .$j] as $g) {
@@ -309,7 +309,7 @@ class nxs_Filters
                     }
                 }
             }
-            
+
             if ($count_date_periods > 1) {
                 for ($k = 2; $k <= $count_date_periods; $k++) {
                     $settings[] = 'starting_period_' .$k;
@@ -317,7 +317,7 @@ class nxs_Filters
                     $settings[] = 'inclusive_' .$k;
                 }
             }
-            
+
             if (!empty($pvData['nxs_start_abs_period']) || !empty($pvData['nxs_end_abs_period'])) {
                 $setToSave['absPeriods'][0]['start'] = (isset($pvData['nxs_start_abs_period']))?$pvData['nxs_start_abs_period']:'';
                 $setToSave['absPeriods'][0]['typeStart'] = (isset($pvData['nxs_start_abs_period_type']))?$pvData['nxs_start_abs_period_type']:'';
@@ -360,7 +360,7 @@ class nxs_Filters
         }
         return $setToSave;
     }
-    
+
     public static function save_schinfo($post_id)
     {
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
@@ -374,7 +374,7 @@ class nxs_Filters
         if (empty($optionsii)) {
             $optionsii = array();
         }
-    
+
         if (empty($optionsii['rpstDays'])) {
             $optionsii['rpstDays'] = 0;
         }
@@ -386,13 +386,13 @@ class nxs_Filters
         }
         $rpstEvrySecEx = $optionsii['rpstDays']*86400+$optionsii['rpstHrs']*3600+$optionsii['rpstMins']*60;
         $isRpstWasOn = isset($optionsii['rpstOn']) && $optionsii['rpstOn']=='1';
-    
+
         if (isset($pval['rpstOn'])) {
             $optionsii['rpstOn'] = $pval['rpstOn'];
         } else {
             $optionsii['rpstOn'] = 0;
         }
-    
+
         if (isset($pval['rpstDays'])) {
             $optionsii['rpstDays'] = trim($pval['rpstDays']);
         }
@@ -411,30 +411,30 @@ class nxs_Filters
         if (isset($pval['rpstRndMins'])) {
             $optionsii['rpstRndMins'] = trim($pval['rpstRndMins']);
         }
-        
+
         if ($optionsii['rpstRndMins']>30) {
             $optionsii['rpstRndMins'] = '30';
         }
         if (empty($optionsii['rpstDays']) && empty($optionsii['rpstHrs']) && $optionsii['rpstRndMins']>($optionsii['rpstMins']/2)) {
             $optionsii['rpstRndMins'] = ceil(($optionsii['rpstMins']/2)-1);
         }
-         
+
         if (isset($pval['rpstPostIncl'])) {
             $optionsii['rpstPostIncl'] = trim($pval['rpstPostIncl']);
         }
-    
+
         if (isset($pval['rpstStop'])) {
             $optionsii['rpstStop'] = trim($pval['rpstStop']);
         } else {
             $optionsii['rpstStop'] = 'O';
         }
-    
+
         $rpstEvrySecNew = $optionsii['rpstDays']*86400+$optionsii['rpstHrs']*3600+$optionsii['rpstMins']*60;
         $rpstRNDSecs = isset($optionsii['rpstRndMins'])?$optionsii['rpstRndMins']*60:0;
         if ($rpstRNDSecs>$rpstEvrySecNew) {
             $optionsii['rpstRndMins'] = 0;
         }
-        
+
         global $nxs_cTime;
         $nxs_cTime = time() + (get_option('gmt_offset') * HOUR_IN_SECONDS);
         if (isset($pval['rpstCustTD']) && is_array($pval['rpstCustTD'])) {
@@ -444,12 +444,12 @@ class nxs_Filters
         } else {
             $optionsii['rpstCustTD'] = array();
         }
-        
+
         $isTD = (isset($pval['rpstTimes']) && $pval['rpstTimes']=='S' && !empty($pval['rpstCustTD']) && !empty($pval['rpstCustTD'][0]));
         if (empty($optionsii['rpstNxTime'])) {
             $optionsii['rpstNxTime'] = 0;
         }
-        
+
         if ($optionsii['rpstOn']=='1' && ($rpstEvrySecNew!=$rpstEvrySecEx || $optionsii['rpstTimes']!=$pval['rpstTimes'] || !$isRpstWasOn || ($isTD && $pval['rpstCustTD'][0]!=$optionsii['rpstNxTime']) || !empty($_POST['resetStats']))) {
             global $wpdb;
             $optionsii['rpstNxTime'] = $isTD?strtotime($pval['rpstCustTD'][0]):$nxs_cTime + $rpstEvrySecNew;
@@ -462,11 +462,11 @@ class nxs_Filters
             global $wpdb;
             $wpdb->delete($wpdb->prefix . "nxs_query", array( 'postid' => $post_id ));
         }
-        
+
         if (isset($pval['rpstTimes'])) {
             $optionsii['rpstTimes'] = trim($pval['rpstTimes']);
         }
-        
+
         if (isset($pval['rpstType'])) {
             $optionsii['rpstType'] = trim($pval['rpstType']);
         }
@@ -495,8 +495,8 @@ class nxs_Filters
         } else {
             $optionsii['rpstOnlyUniq'] = 0;
         }
-        
-        
+
+
         if (isset($pval['rpstBtwHrsType'])) {
             $optionsii['rpstBtwHrsType'] = trim($pval['rpstBtwHrsType']);
         }
@@ -517,7 +517,7 @@ class nxs_Filters
         } else {
             $optionsii['rpstBtwDays'] = array();
         }
-        
+
         if (empty($optionsii['lastID']) || !empty($_POST['resetStats'])) {
             if (empty($optionsii['rpstType']) || $optionsii['rpstType']=='2') {
                 $optionsii['lastID'] = 0;
@@ -565,26 +565,26 @@ class nxs_Filters
         self::save_meta($postID, 'nxs_rpstr_stats', $stats);
         return $stats;
     }
-    
+
     public static function print_title_metabox($current_post)
     {
         $options = (!empty($current_post))?maybe_unserialize(get_post_meta($current_post->ID, 'nxs_rpstr', true)):'';
         $ii = !empty($options['ii'])?$options['ii']:'0';
         if (!empty($current_post)) {
             $stats = self::getStats($current_post->ID, '', $options);
-        } ?>    
+        } ?>
     <input value="1"  id="riC<?php echo $ii; ?>" <?php if (!isset($options['rpstOn']) || trim($options['rpstOn'])=='1') {
             echo "checked";
-        } ?> type="checkbox" name="nxs_rpstr[rpstOn]"/> 
+        } ?> type="checkbox" name="nxs_rpstr[rpstOn]"/>
        <b style="font-size: 16px;"><?php _e('Activate this Reposter Action', 'social-networks-auto-poster-facebook-twitter-g'); ?> </b> <br />
-    
-    <br /><h4 style=" margin: 0px;float: left;"> <?php _e('Reposter Action Title:', 'social-networks-auto-poster-facebook-twitter-g'); ?></h4> 
+
+    <br /><h4 style=" margin: 0px;float: left;"> <?php _e('Reposter Action Title:', 'social-networks-auto-poster-facebook-twitter-g'); ?></h4>
     <div id="titlediv"><div id="titlewrap"><label class="screen-reader-text" id="title-prompt-text" for="title">Enter title here</label>
       <input type="text" name="post_title" size="30" value="<?php echo (!empty($current_post))?$current_post->post_title:''; ?>" id="title" autocomplete="off">
     </div></div><br/>
-    
+
     <b style="font-size: 15px;vertical-align: middle;"><?php _e('Get posts:', 'social-networks-auto-poster-facebook-twitter-g'); ?></b>
-       <select id="riS<?php echo $ii; ?>" name="nxs_rpstr[rpstType]" onchange="nxs_actDeActTurnOff(jQuery(this).attr('id'));">        
+       <select id="riS<?php echo $ii; ?>" name="nxs_rpstr[rpstType]" onchange="nxs_actDeActTurnOff(jQuery(this).attr('id'));">
         <option value="2" <?php  if (isset($options['rpstType']) && $options['rpstType']=='2') {
             echo 'selected="selected"';
         } ?>>One By One - Old to New</option>
@@ -595,8 +595,8 @@ class nxs_Filters
             nxs_doSMAS42($options);
         } else {
             ?> <option disabled="disabled">[Pro Only] Random</option> <?php
-        } ?>        
-       </select> 
+        } ?>
+       </select>
        <br/>
        <input value="1"  id="riOC<?php echo $ii; ?>" <?php if (isset($options['rpstOnlyPUP']) && trim($options['rpstOnlyPUP'])=='1') {
             echo "checked";
@@ -607,24 +607,24 @@ class nxs_Filters
             echo "checked";
         } ?> type="checkbox" name="nxs_rpstr[rpstOnlyUniq]"/><b><?php _e('Post each post only once', 'social-networks-auto-poster-facebook-twitter-g'); ?></b>  - <i><?php _e('This will only post posts that were never posted by this reposter. If you reset reposter all posts will become available for reposting again.', 'social-networks-auto-poster-
       facebook-twitter-g'); ?></i> <br/></span>
-      
+
       <?php if (!empty($current_post)) {
-            ?> 
-        <div style="margin-top: 15px"> <input type="button" id="svBtn" onclick="nxs_svRep('<?php echo $current_post->ID; ?>')" class="button-primary" value="Save Reposter" /> </div> 
+            ?>
+        <div style="margin-top: 15px"> <input type="button" id="svBtn" onclick="nxs_svRep('<?php echo $current_post->ID; ?>')" class="button-primary" value="Save Reposter" /> </div>
       <?php
         }
         if (!empty($current_post)) {
             ?>
-      
+
       <div><h3><?php _e('Info/Stats', 'social-networks-auto-poster-facebook-twitter-g'); ?>:&nbsp;<span style="font-size: 12px;">[<a href="#" data-rid="<?php echo $current_post->ID; ?>" id="nxs_rstRPStats"><?php _e('Reset Reposter', 'social-networks-auto-poster-facebook-twitter-g'); ?></a>]</span></h3><img id="nxsSaveLoadingImg" style="display: none;" src='<?php echo NXS_PLURL; ?>img/ajax-loader-med.gif' /><div id="nxsSNAP_rpstrStats"><?php echo $stats['statsText']; ?></div></div>
-      
+
     <?php
         }
     }
     public static function print_schedule_metabox($current_post)
     {
         ?>
-   
+
    <?php $cr = get_option('NXS_cronCheck');
         if (!empty($cr) && is_array($cr) && isset($cr['status']) && $cr['status']=='0') {
             global $nxs_SNAP;
@@ -633,7 +633,7 @@ class nxs_Filters
             }
             $gOptions = $nxs_SNAP->nxs_options;
             if (isset($gOptions['forceBrokenCron']) && $gOptions['forceBrokenCron'] =='1') {
-                ?> 
+                ?>
          <span style="color: red"> <?php _e('Your WP Cron is not working correctly. Auto Reposting service is active by force. <br/> This might cause problems. Please see the test results and recommendations', 'social-networks-auto-poster-facebook-twitter-g'); ?>
          &nbsp;-&nbsp;<a target="_blank" href="<?php global $nxs_snapThisPageUrl;
                 echo $nxs_snapThisPageUrl; ?>&do=crtest">WP Cron Test Results</a></span>
@@ -645,21 +645,21 @@ class nxs_Filters
    <?php return;
             }
         } ?>
-   
+
    <?php $options = (!empty($current_post))?maybe_unserialize(get_post_meta($current_post->ID, 'nxs_rpstr', true)):'';
         $ii = !empty($options['ii'])?$options['ii']:'0';
         $nt = !empty($options['nt'])?$options['nt']:'0'; ?>
-   
-   <div class="nxs_tls_bdX">          
+
+   <div class="nxs_tls_bdX">
      <?php if (function_exists('ns_SMASV41')) {
             ?> <input type="radio" name="nxs_rpstr[rpstTimes]" value="A" class="rpstrTimes" <?php if (empty($options['rpstTimes']) || $options['rpstTimes']=='A') {
                 echo 'checked="checked"';
             } ?> /><?php
-        } ?><b><?php _e('Post every:', 'social-networks-auto-poster-facebook-twitter-g'); ?> </b>               
+        } ?><b><?php _e('Post every:', 'social-networks-auto-poster-facebook-twitter-g'); ?> </b>
      <input type="text" name="nxs_rpstr[rpstDays]" style="width: 35px;" value="<?php echo isset($options['rpstDays'])?$options['rpstDays']:'0'; ?>" />&nbsp;<?php _e('Days', 'social-networks-auto-poster-facebook-twitter-g'); ?>&nbsp;&nbsp;
      <input type="text" name="nxs_rpstr[rpstHrs]" style="width: 35px;" value="<?php echo isset($options['rpstHrs'])?$options['rpstHrs']:'2'; ?>" />&nbsp;<?php _e('Hours', 'social-networks-auto-poster-facebook-twitter-g'); ?>&nbsp;&nbsp;
-     <input type="text" name="nxs_rpstr[rpstMins]" style="width: 35px;" value="<?php echo isset($options['rpstMins'])?$options['rpstMins']:'0'; ?>" />&nbsp;<?php _e('Minutes', 'social-networks-auto-poster-facebook-twitter-g'); ?>     
-     
+     <input type="text" name="nxs_rpstr[rpstMins]" style="width: 35px;" value="<?php echo isset($options['rpstMins'])?$options['rpstMins']:'0'; ?>" />&nbsp;<?php _e('Minutes', 'social-networks-auto-poster-facebook-twitter-g'); ?>
+
      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      <b><?php _e('Randomize posting time: &#177;', 'social-networks-auto-poster-facebook-twitter-g'); ?> </b>
      <input type="text" name="nxs_rpstr[rpstRndMins]" style="width: 35px;" value="<?php echo isset($options['rpstRndMins'])?$options['rpstRndMins']:'15'; ?>" onmouseout="hidePopShAtt('RPST1');" onmouseover="showPopShAtt('RPST1', event);" />&nbsp;<?php _e('Minutes', 'social-networks-auto-poster-facebook-twitter-g'); ?>
@@ -668,15 +668,15 @@ class nxs_Filters
        <b><?php _e('When finished', 'social-networks-auto-poster-facebook-twitter-g'); ?>:</b>&nbsp;  <?php if (function_exists('nxs_v4doSMAS412')) {
             nxs_v4doSMAS412($options);
         } else {
-            ?> <?php _e('Turn Reposting Off', 'social-networks-auto-poster-facebook-twitter-g') ?> 
+            ?> <?php _e('Turn Reposting Off', 'social-networks-auto-poster-facebook-twitter-g') ?>
         <input type="hidden" name="nxs_rpstr[rpstStop]" value="O"/> <?php
-        } ?>  
-       </div> 
+        } ?>
+       </div>
        <?php if (function_exists('nxs_v4doSMAS41')) {
             nxs_v4doSMAS41($options);
         } ?>
-     </div>     
-     
+     </div>
+
      <?php if (function_exists('nxs_v4doSMAS413')) {
             nxs_v4doSMAS413($options);
         } else {
@@ -684,12 +684,12 @@ class nxs_Filters
        <div style="border: 2px dashed #ddd; border-radius: 3px; padding: 5px; margin-bottom: 8px; margin-top: 8px;"><b style="color: #008000"><?php  _e('[Pro Only]', 'social-networks-auto-poster-facebook-twitter-g'); ?></b>&nbsp;<?php
          _e('You can chose what to do when reposting is finished: "Stop", "Repeat", or "Wait for new posts". You can set reposting only to specific days and hours.', 'social-networks-auto-poster-facebook-twitter-g'); ?></div>   <?php
         } ?>
-     
+
      </div>
-     
+
     <?php
     }
-    
+
     public static function print_networks_metabox($cp)
     {
         global $nxs_snapAvNts, $nxs_SNAP;
@@ -705,7 +705,7 @@ class nxs_Filters
             $clName = 'nxs_snapClass'.$avNt['code'];
             $ntClInst = new $clName();
             if (isset($networks[$avNt['lcode']]) && count($networks[$avNt['lcode']])>0) {
-                ?>                
+                ?>
             <div class="nxsNPRowGroup">
             <div class="nsx_iconedTitle" style="margin-bottom:1px;background-image:url(<?php echo NXS_PLURL; ?>img/<?php echo $avNt['lcode']; ?>16.png);"><?php echo $avNt['name']; ?></div>
             <?php $ntOpts = $networks[$avNt['lcode']];
@@ -716,23 +716,23 @@ class nxs_Filters
                         $isCh=!empty($svdNTs)&&!empty($svdNTs[strtolower($avNt['code'])][$indx])&&$svdNTs[strtolower($avNt['code'])][$indx] == '1';
                     } else {
                         $isCh = (int)$pbo['do'] == 1;
-                    } ?> 
+                    } ?>
               <div class="nxsNPRowLine">
                 <input class="nxsNPDoChb" value="<?php echo $avNt['lcode']; ?>--<?php echo $indx; ?>" name="nxs_NPNts[]" type="checkbox" <?php if ($isCh) {
                         echo "checked";
-                    } ?> />               
+                    } ?> />
                 <?php echo $avNt['name']; ?> <i style="color: #005800;"><?php if ($pbo['nName']!='') {
                         echo "(".$pbo['nName'].")";
                     } ?></i>
-              </div>              
+              </div>
             <?php
                 } ?></div><?php
             }
-        } ?> 
+        } ?>
       </div>
     <?php
     }
-    
+
     public static function print_posts_metabox($current_post, $nt='', $ii='', $metaSettings='')
     {
         if (is_array($nt)) {
@@ -742,7 +742,7 @@ class nxs_Filters
         if (empty($ntN)) {
             wp_nonce_field(basename(__FILE__), 'nxs_metabox_nonce');
         }
-        
+
         //## Get saved Settinsg
         if (empty($metaSettings) && !empty($current_post->ID)) {
             $metaSettings = maybe_unserialize(get_post_meta($current_post->ID, 'nxs_rpstr_data', true));
@@ -758,7 +758,7 @@ class nxs_Filters
             self::print_timeframe_section($current_post, $metaSettings, $nt, $ii);
             self::print_dates_section($current_post, $metaSettings, $nt, $ii);
         }
-             
+
         self::print_types_section($current_post, $metaSettings, $nt, $ii);
         self::print_author_section($current_post, $metaSettings, $nt, $ii);
         if (empty($ntN) && empty($metaSettings['fltrsOn'])) {
@@ -775,7 +775,7 @@ class nxs_Filters
              <?php
         } ?></div><?php
     }
-    
+
     public static function makeInputName($name, $nt='', $ii='')
     {
         $ntN = $nt.$ii;
@@ -825,20 +825,20 @@ class nxs_Filters
         $selCI = empty($metaSettings['nxs_ie_cats_names']) ? 'checked="checked"' : '';
         $selTE = $selTI=='' ? 'checked="checked"' : '';
         $selCE = $selCI=='' ? 'checked="checked"' : '';
-        
+
         //echo '<div><label class="field_title">'. __( 'Categories', 'social-networks-auto-poster-facebook-twitter-g' ) . '('.$catsCnt.'):</label>';
         echo '<div><label class="field_title">'. __('Categories', 'social-networks-auto-poster-facebook-twitter-g') . ':</label>';
         echo '&nbsp;<input type="radio" '.$selCI.' name="'.self::makeInputName('nxs_ie_cats_names', $nt, $ii).'" value="0">Include (Post only with..)&nbsp;&nbsp;<input type="radio" '.$selCE.' name="'.self::makeInputName('nxs_ie_cats_names', $nt, $ii).'" value="1">Exclude (Do not post ...)<br/>';
         self::print_select((!empty($current_post->ID))?$current_post->ID:0, $cat_names, 'nxs_cats_names'.$ntN, !empty($metaSettings['nxs_cats_names'])?$metaSettings['nxs_cats_names']:'', true, true, self::makeInputName('nxs_cats_names', $nt, $ii), 'nxsSelItAjx', 'category');
         echo '</div>';
-        
+
         //echo '<div><label class="field_title">'. __( 'Tags', 'social-networks-auto-poster-facebook-twitter-g' ) . '('.$tagsCnt.'):</label>';
         echo '<div><label class="field_title">'. __('Tags', 'social-networks-auto-poster-facebook-twitter-g') . ':</label>';
         echo '&nbsp;<input type="radio" '.$selTI.' name="'.self::makeInputName('nxs_ie_tags_names', $nt, $ii).'" value="0">Include&nbsp;&nbsp;<input type="radio" '.$selTE.' name="'.self::makeInputName('nxs_ie_tags_names', $nt, $ii).'" value="1">Exclude<br/>';
         self::print_select((!empty($current_post->ID))?$current_post->ID:0, $tags_names, 'nxs_tags_names'.$ntN, !empty($metaSettings['nxs_tags_names'])?$metaSettings['nxs_tags_names']:'', true, true, self::makeInputName('nxs_tags_names', $nt, $ii), 'nxsSelItAjxAdd', 'post_tag');
         echo '</div>';
 
-        
+
         echo "</div>";
     }
     public static function print_timeframe_section($current_post, $metaSettings, $nt='', $ii='')
@@ -846,36 +846,36 @@ class nxs_Filters
         $isVis =  !empty($metaSettings["nxs_starting_period"]);
         echo '<h4 onclick="jQuery(\'#nxs_sec_timeframe\').toggle();"; style="cursor:pointer; background-image: url(\''.NXS_PLURL.'img/icons/time24.png\');background-repeat: no-repeat; padding-top: 2px; padding-left: 28px; height:24px;">'.
           __('Timeframes (Exact Dates)', 'social-networks-auto-poster-facebook-twitter-g') .'&nbsp;&nbsp;&gt;&gt; </h4><div id="nxs_sec_timeframe" class="nxsLftPad" style="display:'.($isVis?'block':'none').';">';
-        
+
         $count_periods     = (!empty($current_post->ID) && !empty($metaSettings['nxs_count_date_periods']))?$metaSettings['nxs_count_date_periods']:'';
         if (empty($count_periods)) {
             $count_periods = 1;
         }
-                
+
         echo '<div id="nxs_timeframeTopDiv'.$nt.$ii.'">';
         for ($i = 1; $i <= $count_periods; $i++) {
             $postfix = $i == 1 ? '' : '_'. $i;
             $rel     = $i == 1 ? '' : 'nxs_date_period_'. $i;
             $check_inclusive = (!empty($current_post->ID) && !empty($metaSettings["nxs_inclusive$postfix"]))?$metaSettings["nxs_inclusive$postfix"]:'';
-                        
+
             if ($i > 1) {
                 echo '<br/>';
             }
             echo '<div class="nxs_short_field" id="nxs_timeframe_Div'.$nt.$ii.$postfix.'" rel="'. $rel .'"><select name="nxs_timeframe_incORExcl'. $postfix. '"><option value="i" selected="selected">Include</option><option value="e">Exclude</option></select>';
             echo '<span class="field_title">'. __(' posts from ', 'social-networks-auto-poster-facebook-twitter-g') .'</span>';
             echo '<input type="text" id="'. 'nxs_starting_period'. $postfix. '" name="'. 'nxs_starting_period'. $postfix. '" class="selectize-input datepicker" value="'. ((!empty($current_post->ID) && !empty($metaSettings["nxs_starting_period$postfix"]))?$metaSettings["nxs_starting_period$postfix"]:'') .'">';
-                        
+
             echo '<span class="field_title">'. __(' to ', 'social-networks-auto-poster-facebook-twitter-g') .'</span>';
             echo '<input type="text" id="'. 'nxs_end_period'. $postfix. '" name="'. 'nxs_end_period'. $postfix. '" class="selectize-input datepicker" value="'. ((!empty($current_post->ID) && !empty($metaSettings["nxs_end_period$postfix"]))?$metaSettings["nxs_end_period$postfix"]:'') .'">';
-            
+
             echo '<input type="hidden" name="'. 'nxs_inclusive'. $postfix. '" id="'. 'nxs_inclusive'. $postfix. '"  value="1">';
             echo '<span style="padding:5px;"><button style="display:'.($i > 1 ?'inline-block':'none').'" name="nxs_remove_date_period'. $postfix. '" id="nxs_remove_date_period'. $postfix. '" class="nxs_remove_date_period">'. __('Remove', 'social-networks-auto-poster-facebook-twitter-g') .'</button></span>';
-            
+
             echo '</div>';
         }
         echo '</div>';
         echo '<br/>';
-        
+
         echo '<button data-ii="'.$ii.'" data-nt="'.$nt.'"  class="nxs_add_date_period">'. __('Add More', 'social-networks-auto-poster-facebook-twitter-g') .'...</button>';
         echo '<input type="hidden" id="nxs_count_date_periods" name="nxs_count_date_periods" value="'. $count_periods .'">';
         echo "</div>";
@@ -885,13 +885,13 @@ class nxs_Filters
         $isVis =  !empty($metaSettings['absPeriods']);
         echo '<h4 onclick="jQuery(\'#nxs_sec_dates\').toggle();"; style="cursor:pointer; background-image: url(\''.NXS_PLURL.'img/icons/time24.png\');background-repeat: no-repeat; padding-top: 2px; padding-left: 28px; height:24px;">'.
           __('Dates - Older/Newer', 'social-networks-auto-poster-facebook-twitter-g') .'&nbsp;&nbsp;&gt;&gt; </h4><div id="nxs_sec_dates" class="nxsLftPad" style="display:'.($isVis?'block':'none').';">';
-        
+
         $count_abs_periods = (!empty($current_post->ID) && !empty($metaSettings['nxs_count_abs_periods']))?$metaSettings['nxs_count_abs_periods']:'';
         if (empty($count_abs_periods)) {
             $count_abs_periods = 1;
         }
         echo '<div id="nxs_abstimeTopDiv'.$nt.$ii.'">';
-        
+
         for ($j = 1; $j <= $count_abs_periods; $j++) {
             $postfix = $j == 1 ? '' : '_'. $j;
             $rel = $j == 1 ? '' : 'nxs_abs_period_'. $j;
@@ -899,7 +899,7 @@ class nxs_Filters
             if ($j>1 && empty($metaSettings["absPeriods"][$indx])) {
                 continue;
             }
-                              
+
             $types_abs_periods = array(
             'days'   => __('Days', 'social-networks-auto-poster-facebook-twitter-g'),
             'weeks'  => __('Weeks', 'social-networks-auto-poster-facebook-twitter-g'),
@@ -908,23 +908,23 @@ class nxs_Filters
             'minutes'=> __('Minutes', 'social-networks-auto-poster-facebook-twitter-g'),
             'hours'  => __('Hours', 'social-networks-auto-poster-facebook-twitter-g')
             );
-                        
+
             if ($j > 1) {
                 echo '<br/>';
             }
             echo '<div class="nxs_short_fieldx" id="nxs_abstime_Div'.$nt.$ii.$postfix.'"  rel="'. $rel .'">';
             echo '<span class="field_title">'. __('Posts newer than', 'social-networks-auto-poster-facebook-twitter-g') .' </span>';
             echo '<input type="text" style="width:40px;" id="nxs_start_abs_period'. $postfix. '" name="nxs_start_abs_period'. $postfix. '" value="'. ((!empty($current_post->ID) && !empty($metaSettings["absPeriods"][$indx]['start']))?$metaSettings["absPeriods"][$indx]['start']:'') .'">';
-            
+
             self::printSimpleSelect("nxs_start_abs_period_type$postfix", "nxs_start_abs_period_type$postfix", (!empty($metaSettings["absPeriods"][$indx])?$metaSettings["absPeriods"][$indx]['typeStart']:'days'), $types_abs_periods, 'NS');
             //self::print_select( (!empty( $current_post->ID))?$current_post->ID:0, $types_abs_periods, "typeStart", $metaSettings["absPeriods"][$indx], true, false, "nxs_start_abs_period_type$postfix",'NS' );
             echo '<span class="field_title">'. __(' and older than', 'social-networks-auto-poster-facebook-twitter-g') .' </span>';
             echo '<input type="text" style="width:40px;" id="nxs_end_abs_period'. $postfix. '" name="'. 'nxs_end_abs_period'. $postfix. '" class="selectize-input" value="'. ((!empty($current_post->ID) && !empty($metaSettings["absPeriods"][$indx]['end']))?$metaSettings["absPeriods"][$indx]['end']:'') .'">';
             //self::print_select( (!empty( $current_post->ID))?$current_post->ID:0, $types_abs_periods, "nxs_end_abs_period_type$postfix", $metaSettings, true, false,'','NS' );
             self::printSimpleSelect("nxs_end_abs_period_type$postfix", "nxs_end_abs_period_type$postfix", (!empty($metaSettings["absPeriods"][$indx])?$metaSettings["absPeriods"][$indx]['typeEnd']:'days'), $types_abs_periods, 'NS');
-                       
+
             echo '<span style="padding:5px;"><button style="display:'.($j > 1 ?'inline-block':'none').'" name="nxs_remove_abs_period'. $postfix. '" id="nxs_remove_abs_period'. $postfix. '" class="nxs_remove_abs_period">'. __('Remove', 'social-networks-auto-poster-facebook-twitter-g') .'</button></span>';
-            
+
             echo '</div>';
         }
         echo '</div>';
@@ -939,8 +939,8 @@ class nxs_Filters
         //## Type, Status, Format
         echo '<h4 onclick="jQuery(\'#nxs_sec_types'.$ntN.'\').toggle();"; style="cursor:pointer; background-image: url(\''.NXS_PLURL.'img/icons/type24.png\');background-repeat: no-repeat; padding-top: 2px; padding-left: 28px; height:24px;">'.
           __('Post Type, Post Format', 'social-networks-auto-poster-facebook-twitter-g') .'&nbsp;&nbsp;&gt;&gt; </h4><div id="nxs_sec_types'.$ntN.'" class="nxsLftPad" style="display:'.($isVis?'block':'none').';">';
-        
-        
+
+
         $formats = array();
         if (is_array(self::$post_formats)) {
             foreach (self::$post_formats[0] as $format) {
@@ -948,8 +948,8 @@ class nxs_Filters
             }
             $formats['standard'] = 'Standard';
         }
-        
-        
+
+
         $selCI = empty($metaSettings['nxs_ie_posttypes']) ? 'checked="checked"' : '';
         $selCE = $selCI=='' ? 'checked="checked"' : '';
         /*
@@ -983,11 +983,11 @@ class nxs_Filters
         // ## Author
         echo '<h4 onclick="jQuery(\'#nxs_sec_author'.$ntN.'\').toggle();"; style="cursor:pointer; background-image: url(\''.NXS_PLURL.'img/icons/user24.png\');background-repeat: no-repeat; padding-top: 2px; padding-left: 28px; height:24px;">'.
           __('Author', 'social-networks-auto-poster-facebook-twitter-g') .'&nbsp;&nbsp;&gt;&gt; </h4><div id="nxs_sec_author'.$ntN.'" class="nxsLftPad" style="display:'.($isVis?'block':'none').';">';
-        
+
         $user_names = array(); //$users = get_users();     //   prr($users); //## Not Good when we have a lot of subscribers.
         global $wpdb;
         $users = $wpdb->get_results("SELECT ID, user_login, display_name FROM $wpdb->users WHERE 1=1 AND {$wpdb->users}.ID IN (SELECT {$wpdb->usermeta}.user_id FROM $wpdb->usermeta WHERE {$wpdb->usermeta}.meta_key = '{$wpdb->prefix}capabilities' AND {$wpdb->usermeta}.meta_value NOT LIKE '%subscriber%') ORDER BY display_name ASC"); //prr($users);
-        
+
         if ($users) {
             foreach ($users as $user) {
                 $user_names[$user->ID] = $user->display_name." (".$user->user_login.")";
@@ -1006,7 +1006,7 @@ class nxs_Filters
         // ## Exact Posts and Pages
         echo '<h4 onclick="jQuery(\'#nxs_sec_postsPages\').toggle();"; style="cursor:pointer; background-image: url(\''.NXS_PLURL.'img/icons/post24.png\');background-repeat: no-repeat; padding-top: 2px; padding-left: 28px; height:24px;">'.
          __('Exact Posts and Pages', 'social-networks-auto-poster-facebook-twitter-g') .'&nbsp;&nbsp;&gt;&gt; </h4><div id="nxs_sec_postsPages" class="nxsLftPad" style="display:'.($isVis?'block':'none').';">';
-        
+
         $post_names = array(); //$users = get_users();     //   prr($users); //## Not Good when we have a lot of subscribers.
         global $wpdb; // $posts = $wpdb->get_results("SELECT ID, post_title FROM $wpdb->posts WHERE 1=1 ORDER BY post_title ASC LIMIT 500"); //prr($users);
         $posts = get_posts(array('orderby'=>'title', 'post_status' => array( 'pending', 'publish', 'future' ), 'post_type' =>  'any', 'posts_per_page'=>100, 'post__in' => (!empty($metaSettings['nxs_post_ids'])?$metaSettings['nxs_post_ids']:array( ))));
@@ -1022,63 +1022,63 @@ class nxs_Filters
         }
         echo "</div>";
     }
-    
+
     public static function print_postsPagesX_section($current_post, $metaSettings, $nt='', $ii='')
     {
         $isVis = !empty($metaSettings['nxs_name_post']) || !empty($metaSettings['nxs_name_page']) || !empty($metaSettings['nxs_name_parent']);
         // ## Exact Posts and Pages
         echo '<h4 onclick="jQuery(\'#nxs_sec_postsPages\').toggle();"; style="cursor:pointer; background-image: url(\''.NXS_PLURL.'img/icons/post24.png\');background-repeat: no-repeat; padding-top: 2px; padding-left: 28px; height:24px;">'.
          __('Exact Posts and Pages', 'social-networks-auto-poster-facebook-twitter-g') .'&nbsp;&nbsp;&gt;&gt; </h4><div id="nxs_sec_postsPages" class="nxsLftPad" style="display:'.($isVis?'block':'none').';">';
-        
+
         $posts_names = array();
         $posts_parents = array();
         $pages_names = array();
-        
+
         if (!empty(self::$posts)) {
             foreach (self::$posts as $post) {
                 if (in_array($post->post_type, self::$posts_types) && $post->post_type != 'nxs_filter') {
                     if (!empty($post->post_title) && $post->post_type == 'page') {
                         $pages_names[$post->ID] = $post->post_title;
                     }
-                
+
                     if (!empty($post->post_title) && $post->post_type != 'page' && $post->post_type != 'attachment') {
                         $posts_names[$post->ID] = $post->post_title;
                     }
-                
+
                     if (!empty($post->post_parent) && self::search_post_by_id($post->post_parent)) {
                         $posts_parents[$post->post_parent] = self::search_post_by_id($post->post_parent);
                     }
                 }
             }
         }
-        
-        
+
+
         echo '<div><label class="field_title">'. __('Post/Page/Custom Post Type', 'social-networks-auto-poster-facebook-twitter-g') . ':</label>&nbsp;&nbsp;<span class="description">'. __('Select post') .'</span>';
         self::print_select((!empty($current_post->ID))?$current_post->ID:0, $posts_names, 'nxs_name_post', !empty($metaSettings['nxs_name_post'])?$metaSettings['nxs_name_post']:'', true);
         echo '</div>';
-        
-        
-        
+
+
+
         if (!empty($posts_names)) {
             echo '<div><label class="field_title">'. __('Post Name', 'social-networks-auto-poster-facebook-twitter-g') . ':</label>&nbsp;&nbsp;<span class="description">'. __('Select post by name') .'</span>';
             self::print_select((!empty($current_post->ID))?$current_post->ID:0, $posts_names, 'nxs_name_post', !empty($metaSettings['nxs_name_post'])?$metaSettings['nxs_name_post']:'', true);
             echo '</div>';
         }
-        
+
         if (!empty($pages_names)) {
             echo '<div><label class="field_title">'. __('Page Name', 'social-networks-auto-poster-facebook-twitter-g') . ':</label>&nbsp;&nbsp;<span class="description">'. __('Select page by name') .'</span>';
             self::print_select((!empty($current_post->ID))?$current_post->ID:0, $pages_names, 'nxs_name_page', !empty($metaSettings['nxs_name_page'])?$metaSettings['nxs_name_page']:'', true);
             echo '</div>';
         }
-        
+
         if (!empty($posts_parents)) {
             echo '<div><label class="field_title">'. __('Page/Post Parent Name', 'social-networks-auto-poster-facebook-twitter-g') . ':</label>&nbsp;&nbsp;<span class="description">'. __('Select Page/Post by Parent Name') .'</span>';
             self::print_select((!empty($current_post->ID))?$current_post->ID:0, $posts_parents, 'nxs_name_parent', !empty($metaSettings['nxs_name_parent'])?$metaSettings['nxs_name_parent']:'', true);
             echo '</div>';
         }
-        
-        
-          
+
+
+
         echo "</div>";
     }
     public static function print_search_section($current_post, $metaSettings, $nt='', $ii='')
@@ -1088,8 +1088,8 @@ class nxs_Filters
         echo '<h4 onclick="jQuery(\'#nxs_sec_search'.$nt.$ii.'\').toggle();"; style="cursor:pointer; background-image: url(\''.NXS_PLURL.'img/icons/search24.png\');background-repeat: no-repeat; padding-top: 2px; padding-left: 28px; height:24px;">'.
           __('Search', 'social-networks-auto-poster-facebook-twitter-g') .'&nbsp;&nbsp;&gt;&gt; </h4><div id="nxs_sec_search'.$nt.$ii.'" class="nxsLftPad" style="display:'.($isVis?'block':'none').';">'; ?>
         <div>
-            <label class="field_title"><?php _e('Search', 'social-networks-auto-poster-facebook-twitter-g'); ?>:</label>&nbsp;&nbsp;<span class="description"><?php _e('Please enter the search query') ?></span> <br/>           
-            <input type="text" name="<?php echo self::makeInputName('nxs_search_keywords', $nt, $ii); ?>" class="selectize-input" autocomplete="off" placeholder="Please enter the search query..." value="<?php echo ($isVis)?$metaSettings['nxs_search_keywords']:''; ?>">            
+            <label class="field_title"><?php _e('Search', 'social-networks-auto-poster-facebook-twitter-g'); ?>:</label>&nbsp;&nbsp;<span class="description"><?php _e('Please enter the search query') ?></span> <br/>
+            <input type="text" name="<?php echo self::makeInputName('nxs_search_keywords', $nt, $ii); ?>" class="selectize-input" autocomplete="off" placeholder="Please enter the search query..." value="<?php echo ($isVis)?$metaSettings['nxs_search_keywords']:''; ?>">
         </div> <?php
         echo "</div>";
     }
@@ -1122,7 +1122,7 @@ class nxs_Filters
         $relation_options = array( 'AND', 'OR' );
         $compare_options  = array('='=>'=', '!='=>'!=', 'gt'=>'>', 'gt='=>'>=', 'lt'=>'<', 'lt='=>'<=', 'LIKE'=>'LIKE', 'NOT LIKE'=>'NOT LIKE', 'IN'=>'IN', 'NOT IN'=>'NOT IN', 'BETWEEN'=>'BETWEEN', 'NOT BETWEEN'=>'NOT BETWEEN', 'EXISTS'=>'EXISTS', 'NOT EXISTS'=>'NOT EXISTS');
         echo '<div id="nxs_meta_namesTopDiv'.$nt.$ii.'">';
-        
+
         for ($i = 1; $i <= $count_compares; $i++) {
             $postfix = $i == 1 ? '' : '_'. $i;
             $rel = $i == 1 ? '' : 'nxs_meta_compare_'. $i;
@@ -1149,13 +1149,13 @@ class nxs_Filters
             echo '</div>'; ?></div>
             <div class="nxs_mediumXL_field_txn"><label class="field_title"> <?php _e('Custom Field Value', 'social-networks-auto-poster-facebook-twitter-g'); ?>:</label><br/>
                 <input name="<?php echo self::makeInputName("nxs_meta_value$postfix", $nt, $ii); ?>[]" id="nxs<?php echo $nt.$ii; ?>_meta_value<?php echo $postfix; ?>" style="font-weight: bold; color: #005800; border: 1px solid #ACACAC; width: 95%;" value="<?php echo !empty($metaSettings['post_meta'][$jj]["value"])?$metaSettings['post_meta'][$jj]["value"][0]:''; ?>"/>
-            </div>        
+            </div>
           </div>
           <div class="">
           </div>
         </div>
         <?php
-        
+
         if ($i==1) {
             echo '<div class="nxs_short_field" id="nxs_meta_namesCond'.$nt.$ii.'" style="display:'.(($count_compares>1)?'inline-block':'none').';"><hr/>';
             echo '<label class="field_title">'. __('Condition', 'social-networks-auto-poster-facebook-twitter-g') . ':</label>';
@@ -1163,20 +1163,20 @@ class nxs_Filters
             self::printSelect("nxs".$nt.$ii."_meta_relation", self::makeInputName("nxs_meta_relation", $nt, $ii), false, $relation_options, !empty($metaSettings['post_meta'][0]["relation"])?$metaSettings['post_meta'][0]["relation"]:'', !empty($current_post->ID)?$current_post->ID:0, false, 'notTknz');
             echo '</div>';
         } ?>
-        
-</div>    
+
+</div>
     </div>
         <?php
         }
-        
+
         echo '</div>';
-        
+
         echo '<div style="padding-top:25px;"><button data-ii="'.$ii.'" data-nt="'.$nt.'" class="nxs_add_meta_compare">'. __('Add More', 'social-networks-auto-poster-facebook-twitter-g') .'...</button></div>';
         echo '<input type="hidden" id="nxs_count_meta_'.$nt.$ii.'" name="'.self::makeInputName('nxs_count_meta_compares', $nt, $ii).'" value="'. $count_compares .'">';
-        
+
         echo "</div>";
     }
-        
+
     public static function print_taxonomies_section($current_post, $metaSettings, $nt='', $ii='')
     {
         $isVis = !empty($metaSettings['nxs_term_names']); // prr($metaSettings); //  $metaSettings['nxs_count_term_compares'] = 1;
@@ -1190,12 +1190,12 @@ class nxs_Filters
         $count_compares = !empty($metaSettings['nxs_count_term_compares'])?$metaSettings['nxs_count_term_compares']:''; //prr($metaSettings['nxs_count_term_compares']);
         unset($taxs_names['post_format']);
         $terms_names = array();
-        
+
         if (empty($count_compares)) {
             $count_compares = 1;
         }
         echo '<div id="nxs_term_namesTopDiv'.$nt.$ii.'">';
-        
+
         for ($i = 1; $i <= $count_compares; $i++) {
             $postfix = $i == 1 ? '' : '_'. $i;
             $rel = $i == 1 ? '' : 'nxs_term_compare_'. $i;
@@ -1203,13 +1203,13 @@ class nxs_Filters
                 continue;
             }
             echo '<div class="nxs_terms_panel"  id="nxs_term_namesDiv'.$nt.$ii.$postfix.'"><hr/>';
-            
+
             echo '<div class="nxs_terms_leftPanel" style="display:'.(($i>1)?'block':'none').';">';
-                
+
             echo '<button class="nxs_remove_term_compare">'. __('Remove', 'social-networks-auto-poster-facebook-twitter-g') .'</button>';
             echo '</div><div class="nxs_terms_rightPanel">';
-            
-            
+
+
             echo '<div>';
             //## Get already selected terms
             if (!empty($metaSettings["nxs_tax_names$postfix"])) {
@@ -1228,38 +1228,38 @@ class nxs_Filters
             echo '<label class="field_title">'. __('Taxonomy', 'social-networks-auto-poster-facebook-twitter-g') . ':</label><br/>';
             self::print_select((!empty($current_post->ID))?$current_post->ID:0, $taxs_names, "nxs".$nt.$ii."_tax_names$postfix", !empty($metaSettings["nxs_tax_names$postfix"])?$metaSettings["nxs_tax_names$postfix"]:'', true, false, self::makeInputName("nxs_tax_names$postfix", $nt, $ii), 'nxs_tax_names');
             echo '</div>';
-            
+
             echo '<div class="'. 'nxs_short_field" rel="'. $rel .'">';
             echo '<label class="field_title">'. __('Operator', 'social-networks-auto-poster-facebook-twitter-g') . ':</label><br/>';
             self::print_select((!empty($current_post->ID))?$current_post->ID:0, $compare_options, "nxs".$nt.$ii."_term_operator$postfix", !empty($metaSettings["nxs_term_operator$postfix"])?$metaSettings["nxs_term_operator$postfix"]:'', false, false, self::makeInputName("nxs_term_operator$postfix", $nt, $ii), 'hui');
             echo '</div>';
-            
+
             echo '<div class="'. 'nxs_short_field" rel="'. $rel .'">';
             echo '<label class="field_title">'. __('Child Terms', 'social-networks-auto-poster-facebook-twitter-g') . ':</label>';
             self::print_select((!empty($current_post->ID))?$current_post->ID:0, $children_options, "nxs".$nt.$ii."_term_children$postfix", !empty($metaSettings["nxs_term_children$postfix"])?$metaSettings["nxs_term_children$postfix"]:'', true, false, self::makeInputName("nxs_term_children$postfix", $nt, $ii), 'hiu');
             echo '</div>';
-          
+
             echo '<br/><div class="nxs_medium_field_txnNL" rel="'. $rel .'">';
             echo '<label class="field_title">'. __('Terms', 'social-networks-auto-poster-facebook-twitter-g') . ':</label>&nbsp;&nbsp;<span class="description">'. __('Select Terms') .'</span>';
             self::print_select((!empty($current_post->ID))?$current_post->ID:0, $terms_names, 'nxs'.$nt.$ii."_term_names$postfix", !empty($metaSettings["nxs_term_names$postfix"])?$metaSettings["nxs_term_names$postfix"]:'', true, true, self::makeInputName("nxs_term_names$postfix", $nt, $ii), 'nxsSelItAjxAdd', !empty($metaSettings["nxs_tax_names$postfix"])?$metaSettings["nxs_tax_names$postfix"]:'');
             echo '</div></div>';
-            
+
             if ($i==1) {
                 echo '<div class="nxs_short_field" id="nxs_term_namesCond'.$nt.$ii.'" style="'.(($count_compares < 2)?'display:none;':'').'">';
                 echo '<label class="field_title">'. __('Condition', 'social-networks-auto-poster-facebook-twitter-g') . ':</label>';
                 self::printSelect("nxs".$nt.$ii."_term_relation", self::makeInputName("nxs_term_relation", $nt, $ii), false, $relation_options, !empty($metaSettings["nxs_term_relation"])?$metaSettings["nxs_term_relation"]:'', !empty($current_post->ID)?$current_post->ID:0, false, 'notTknz');
                 echo '</div>';
             }
-            
-            
+
+
             echo '</div></div>';
         }
-        
+
         echo '</div>';
-        
+
         echo '<button data-ii="'.$ii.'" data-nt="'.$nt.'" class="nxs_add_term_compare">'. __('Add More', 'social-networks-auto-poster-facebook-twitter-g') .'...</button>';
         echo '<input type="hidden" id="nxs_count_term_'.$nt.$ii.'" name="'.self::makeInputName('nxs_count_term_compares', $nt, $ii).'" value="'. $count_compares .'">';
-        
+
         echo "</div>";
     }
 
@@ -1271,7 +1271,7 @@ class nxs_Filters
         // ## Language
         echo '<h4 onclick="jQuery(\'#nxs_sec_lang'.$ntN.'\').toggle();"; style="cursor:pointer; background-image: url(\''.NXS_PLURL.'img/icons/user24.png\');background-repeat: no-repeat; padding-top: 2px; padding-left: 28px; height:24px;">'.
           __('Language', 'social-networks-auto-poster-facebook-twitter-g') .'&nbsp;[Beta]&nbsp;&gt;&gt; </h4><div id="nxs_sec_lang'.$ntN.'" class="nxsLftPad" style="display:'.($isVis?'block':'none').';">';
-        
+
         //## PolyLang
         if (function_exists('pll_languages_list')) {
             $args = array('fields'=>'name');
@@ -1295,7 +1295,7 @@ class nxs_Filters
                 $langs[$lc] = $lObj['translated_name'];
             }
         }  //prr($langs);
-      
+
         if (!empty($langs)) {
             echo '<div><label class="field_title" for="'. 'nxs_langs">'. __('Language', 'social-networks-auto-poster-facebook-twitter-g') . ':</label>&nbsp;&nbsp;<span class="description">'. __('Language') .'</span><br/>';
             self::print_select((!empty($current_post->ID))?$current_post->ID:0, $langs, 'nxs_langs', !empty($metaSettings['nxs_langs'])?$metaSettings['nxs_langs']:'', true, true, self::makeInputName('nxs_langs', $nt, $ii));
@@ -1304,20 +1304,20 @@ class nxs_Filters
         echo "</div>";
     }
 
-    
+
     public static function printSimpleSelect($sID, $sName, $value, $optnsList, $sClass = 'nxsSelIt', $txnType='')
     {
-        $ph = __('Please select from the list...', 'social-networks-auto-poster-facebook-twitter-g'); ?> <select name="<?php echo $sName; ?>" id="<?php echo $sID; ?>" class="<?php echo $sClass; ?>" data-type="<?php echo $txnType; ?>" placeholder="<?php echo $ph; ?>">                 
+        $ph = __('Please select from the list...', 'social-networks-auto-poster-facebook-twitter-g'); ?> <select name="<?php echo $sName; ?>" id="<?php echo $sID; ?>" class="<?php echo $sClass; ?>" data-type="<?php echo $txnType; ?>" placeholder="<?php echo $ph; ?>">
       <?php foreach ($optnsList as $key => $optionName) {
             $selected = $key==$value ? 'selected="selected"' : '';
             echo '<option value="'. esc_attr($key) .'" '. $selected .'>'. esc_attr($optionName) .'</option>';
         } ?>
       </select><?php
     }
-        
+
     public static function printSelect($sID, $sName, $isMultiple, $optnsList, $values, $postID, $useKeyAsValue = false, $sClass = 'nxsSelIt', $txnType='')
     {
-        $ph = __('Please select from the list...', 'social-networks-auto-poster-facebook-twitter-g'); ?> <select name="<?php echo(($isMultiple ? $sName .'[]' : $sName)); ?>" id="<?php echo $sID; ?>" <?php echo($isMultiple ? 'multiple="multiple"' : ''); ?> class="<?php echo $sClass; ?>" data-type="<?php echo $txnType; ?>" placeholder="<?php echo $ph; ?>">                 
+        $ph = __('Please select from the list...', 'social-networks-auto-poster-facebook-twitter-g'); ?> <select name="<?php echo(($isMultiple ? $sName .'[]' : $sName)); ?>" id="<?php echo $sID; ?>" <?php echo($isMultiple ? 'multiple="multiple"' : ''); ?> class="<?php echo $sClass; ?>" data-type="<?php echo $txnType; ?>" placeholder="<?php echo $ph; ?>">
       <?php
         foreach ($optnsList as $key => $optionName) {
             $value = $useKeyAsValue ? $key : $optionName;
@@ -1339,15 +1339,15 @@ class nxs_Filters
         }
         return $meta_value == $needle ? true : false;
     }
-    
-    
+
+
     public static function print_select($post_id, $values, $selID_meta_name, $currVal='', $print_key = false, $multiple = true, $name='', $class = 'nxsSelIt', $txnType='')
     {
         $ph = __('Please select from the list...', 'social-networks-auto-poster-facebook-twitter-g');
         if (empty($name)) {
             $name = $selID_meta_name;
-        } ?> <select name="<?php echo(($multiple ? $name .'[]' : $name)); ?>" id="<?php echo $selID_meta_name; ?>" <?php echo($multiple ? 'multiple="multiple"' : ''); ?> class="<?php echo $class; ?>" data-type="<?php echo $txnType; ?>" placeholder="<?php echo $ph; ?>">           
-      
+        } ?> <select name="<?php echo(($multiple ? $name .'[]' : $name)); ?>" id="<?php echo $selID_meta_name; ?>" <?php echo($multiple ? 'multiple="multiple"' : ''); ?> class="<?php echo $class; ?>" data-type="<?php echo $txnType; ?>" placeholder="<?php echo $ph; ?>">
+
       <?php // prr($values, "KKKK");
         foreach ($values as $key => $option_item) {
             $value = $print_key ? $key : $option_item; // prr($selID_meta_name); prr($value); prr($currVal);
@@ -1355,7 +1355,7 @@ class nxs_Filters
             echo '<option value="'. esc_attr($value) .'" '. $selected .'>'. esc_attr($option_item) .'</option>';
         } ?></select><?php
     }
-    
+
     //## Operations
     public static function search_post_by_id($post_id, $field = 'post_title')
     {
@@ -1517,8 +1517,8 @@ if (!function_exists("nxsAnalyzePostFilters")) {
                     $pLang = wpml_get_language_information($post->ID);
                     $pLang = $pLang['locale'];
                 }
-          
-          
+
+
                 //$author = get_user_by('id', $post->post_author); $author = $author->user_login."(".$author->user_nicename.")";
             }
             foreach ($filter['nxs_langs'] as $cctts) {
@@ -1526,7 +1526,7 @@ if (!function_exists("nxsAnalyzePostFilters")) {
             }
             $out .= "<br/>\r\n".'&nbsp;&nbsp;&nbsp;&nbsp;Filter: Language (Autopost Only): '.$fltT .(!empty($pLang)?' | Post Language: '.$pLang:'');
         }
-    
+
         //## Post IDS
         if (!empty($filter['nxs_post_ids'])) {
             $fltT = '';
@@ -1565,7 +1565,7 @@ if (!function_exists("nxsAnalyzePostFilters")) {
                     continue;
                 }
                 $arr = $filter['absPeriods'][$indx];
-      
+
                 if (!empty($arr['start']) && !empty($arr['end'])) {
                     $out .= "<br/>\r\n".'&nbsp;&nbsp;&nbsp;&nbsp;Filter: (Autopost Only): Posts newer than '.$arr['start'].' '.$arr['typeStart'].' and older than '.$arr['end'].' '.$arr['typeEnd'];
                 } elseif (!empty($arr['start'])) {
@@ -1575,7 +1575,7 @@ if (!function_exists("nxsAnalyzePostFilters")) {
                 }
             }
         }
-    
+
         //## Meta
         if (!empty($filter['nxs_count_meta_compares'])) {
             $count_compares =  (int)$filter['nxs_count_meta_compares'];
@@ -1661,12 +1661,12 @@ function get_posts_ids_by_filter($filter)
     if (!empty($filter['nxs_name_post'])) {
         $args['post__in'] = $filter['nxs_name_post'];
     }
-    
+
     if (!empty($filter['nxs_post_ids'])) {
         $args['post__in'] = $filter['nxs_post_ids'];
     }
-    
-    
+
+
     if (!empty($filter['nxs_name_parent'])) {
         $args['post_parent__in'] = $filter['nxs_name_parent'];
     }
@@ -1729,8 +1729,8 @@ function get_posts_ids_by_filter($filter)
             }
         }
     }
-   
-    
+
+
     if (isset($filter['nxs_count_date_periods']) && (!empty($filter['nxs_starting_period']) || !empty($filter['nxs_end_period']))) {
         $date_compares = array();
         $count_compares = $filter['nxs_count_date_periods'];
@@ -1819,7 +1819,7 @@ function get_posts_ids_by_filter($filter)
     if (!empty($filter['posts_per_page'])) {
         $args['posts_per_page'] = $filter['posts_per_page'];
     }
-    
+
     //## WPML
     if (function_exists('wpml_get_language_information') && !empty($args['lang'])) {
         $args['posts_per_page'] = -1;
@@ -1830,7 +1830,7 @@ function get_posts_ids_by_filter($filter)
     $post_ids = $postsRet['p'];
     $qu = $postsRet['q'];
     // $la = array('msg'=>'FLT Res X', 'extInfo'=>print_r($filter, true)." | ".print_r($post_ids, true));   nxsLogIt($la);
-    
+
     //## WPML
     if (function_exists('wpml_get_language_information') && !empty($args['lang'])) {
         $pii = array();

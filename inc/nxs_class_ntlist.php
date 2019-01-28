@@ -9,7 +9,7 @@ if (!class_exists('nxs_snapClassNT')) {
         public $isMobile = false;
         public $isRepost = false;
         public $hideUnchecked = true;
-    
+
         public function __construct()
         {
             $this->isMobile = nxs_isMobile();
@@ -62,7 +62,7 @@ if (!class_exists('nxs_snapClassNT')) {
             $out['v'] = NXS_SETV;
             return $out;
         }
-    
+
         public function showNTGroup()
         {
             $cbo = count($this->nt);
@@ -162,7 +162,7 @@ if (!class_exists('nxs_snapClassNT')) {
         </div><div id="nxsNTSetDiv<?php echo $this->ntInfo['code'].$indx; ?>"></div> 
       </div><?php
         }
-       
+
         public function showNoAPIMsg($ii, $options)
         {
             ?> <div id="do<?php echo $this->ntInfo['code'].$ii; ?>Div" class="insOneDiv<?php echo " clNewNTSets"; ?>"><div style="border: 2px solid darkred; padding: 25px 15px 15px 15px; margin: 3px; background-color: #fffaf0;"> 
@@ -179,8 +179,8 @@ if (!class_exists('nxs_snapClassNT')) {
             <div style="font-size: 10px; margin-top: 20px;">*If you already have API, please follow instructions from the readme.txt file.</div>
           </div> </div> <?php
         }
-    
-    
+
+
         public function showGNewNTSettings($ii, $options)
         {
             ?><div id="dom<?php echo $this->ntInfo['code'].$ii; ?>Div"> <?php if (!$this->checkIfFunc()) {
@@ -311,7 +311,7 @@ if (!class_exists('nxs_snapClassNT')) {
         $posts_types[] = 'nxs_qp';
         natsort($posts_types); ?><div class="nxs_tls_cpt"><?php  _e('Post Types', 'social-networks-auto-poster-facebook-twitter-g'); ?>&nbsp;&nbsp;<span class="nxsInstrSpan"><a href="https://www.nextscripts.com/snap-features/filters" target="_blank"><?php _e('[Instructions]', 'social-networks-auto-poster-facebook-twitter-g'); ?></a></span></div> <div style="padding-left: 15px;font-size: 16px;"><?php
       //prr($posts_types); //prr($options);
-      
+
       foreach ($posts_types as $pt) {
           $isFOn = !empty($options['fltrs']) && is_array($options['fltrs']) && !empty($options['fltrs']['nxs_post_type']) && in_array($pt, $options['fltrs']['nxs_post_type']); ?>
          <input value="1" name="<?php echo $nt ?>[<?php echo $ii; ?>][pts][<?php echo $pt; ?>]" type="checkbox" class="nxs_acctcb" <?php if ($isFOn) {
@@ -359,7 +359,7 @@ if (!class_exists('nxs_snapClassNT')) {
             echo $pgs; ?>   
      </div> <?php
         }
-    
+
         //## Dealy
         public function addPostingDelaySelV4($nt, $ii, $opts)
         {
@@ -424,7 +424,7 @@ if (!class_exists('nxs_snapClassNT')) {
         <div style="width:100%;"><b style="font-size: 15px;"><?php echo $l; ?>:</b> </div><input name="<?php echo $nt; ?>[<?php echo $ii; ?>][<?php echo $fn; ?>]" id="<?php echo $nt.$ii; ?>SNAPformatT" class="nxAccEdElem" value="<?php echo htmlentities($val, ENT_COMPAT, "UTF-8"); ?>" onfocus="nxs_showFrmtInfo('msgFrmtT<?php echo $nt.$ii; ?>');" /><?php nxs_doShowHint("msgFrmtT".$nt.$ii); ?>
       </div><?php
         }
-    
+
         //## Edit post Elements
         public function elemEdTitleFormat($ii, $l, $msgTFormat)
         {
@@ -444,7 +444,7 @@ if (!class_exists('nxs_snapClassNT')) {
         </div>
       </div><?php
         }
-    
+
         public function saveCommonNTSettings($pval, $o)
         {
             if (isset($pval['do'])) {
@@ -624,18 +624,18 @@ if (!class_exists('nxs_snapClassNT')) {
             if (isset($pval['nxs_langs'])) {
                 $o['fltrs']['nxs_langs'] = $pval['nxs_langs'];
             }
-      
+
             if (isset($pval['pts']) && is_array($pval['pts'])) {
                 $o['fltrs']['nxs_post_type'] = array_keys($pval['pts']);
             };
-      
+
             if (isset($pval['nxs_post_ids'])) {
                 $o['fltrs']['nxs_post_ids'] = $pval['nxs_post_ids'];
             }
             if (!empty($pval['nxs_search_keywords'])) {
                 $o['fltrs']['nxs_search_keywords'] = $pval['nxs_search_keywords'];
             }
-      
+
             //## Meta
             if (!empty($pval['nxs_count_meta_compares'])) {
                 $o['fltrs']['nxs_count_meta_compares'] = $pval['nxs_count_meta_compares'];
@@ -658,7 +658,7 @@ if (!class_exists('nxs_snapClassNT')) {
                     }
                 }
             }
-      
+
             //## Taxonomies
             if (!empty($pval['nxs_count_term_compares'])) {
                 $o['fltrs']['nxs_count_term_compares'] = $pval['nxs_count_term_compares'];
@@ -711,15 +711,15 @@ if (!class_exists('nxs_snapClassNT')) {
             $o['v'] = NXS_SETV;
             return $o;
         }
-    
+
         public function saveNTSettings()
         {
         }
-    
+
         public function showEditPostNTSettings()
         {
         }
-    
+
         public function showEditNTLine($ii, $pbo, $post)
         {
             if (!$this->checkIfFunc()) {
@@ -898,8 +898,8 @@ if (!class_exists('nxs_snapClassNT')) {
             </div>
          </div><?php
         }
-    
-    
+
+
         public function nxs_tmpltImportComments($post, $ntOpt, $ii)
         {
             $pMeta = maybe_unserialize(get_post_meta($post->ID, 'snap'.$this->ntInfo['code'], true));
@@ -912,8 +912,8 @@ if (!class_exists('nxs_snapClassNT')) {
                 }
             }
         }
-    
-    
+
+
         public function adjMetaOptG($optMt, $pMeta)
         {
             $optMt['isPosted'] = isset($pMeta['isPosted'])?$pMeta['isPosted']:'';
@@ -951,12 +951,12 @@ if (!class_exists('nxs_snapClassNT')) {
       } //prr($optMt); die();
       return $optMt;
         }
-    
+
         public function adjMetaOpt($optMt, $pMeta)
         {
             return $this->adjMetaOptG($optMt, $pMeta);
         }
-    
+
         public function ajaxPost($options)
         {
             check_ajax_referer('nxsSsPageWPN');
@@ -984,20 +984,20 @@ if (!class_exists('nxs_snapClassNT')) {
                 }
             }
         }
-    
+
         public function publish($postID, $nto)
         {
             $fnName = 'nxs_doPublishTo'.$this->ntInfo['code'];
             return $fnName($postID, $nto);
         }
-    
+
         public function adjPreFormatWP(&$options, $postID)
         {
         }
         public function adjAfterPost(&$options, &$ret)
         {
         }
-    
+
         public function metaMarkAsPosted($postID, $ii, $args='')
         {
             $nt = $this->ntInfo['code'];
@@ -1041,7 +1041,7 @@ if (!class_exists('nxs_snapClassNT')) {
             /*$mpo = mysql_real_escape_string(serialize($mpo)); */ delete_post_meta($postID, 'snap'.$nt);
             add_post_meta($postID, 'snap'.$nt, str_replace('\\', '\\\\', serialize($mpo)));
         }
-    
+
         public function publishWP($ii, $postID=0)
         {
             $options = $this->nt[$ii];
@@ -1139,7 +1139,7 @@ if (!class_exists('nxs_snapClassNT')) {
                         $cats = implode(',', $catsA);
                     }
                 }
-        
+
                 if (!empty($options['attchAsVid']) && $options['attchAsVid']=='A') {
                     $vids = nsFindVidsInPost($post);
                     if (count($vids)>0) {
