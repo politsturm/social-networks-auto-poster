@@ -287,11 +287,11 @@ if (!function_exists("nxs_snapAjax")) {
             $wpdb->query("DELETE FROM ". $wpdb->posts ." WHERE post_type = 'nxs_filter'");
             $wpdb->query("DELETE FROM ". $wpdb->posts ." WHERE post_type = 'nxs_qp'");
             $wpdb->query("DELETE FROM ". $wpdb->postmeta ." WHERE meta_key LIKE '_nxs_slinks'");
-            if (((defined('MULTISITE') && MULTISITE!=false && !empty($_POST['nt']) && $_POST['nt']=='mu' && current_user_can('manage_network_options'))) || !defined('MULTISITE') || MULTISITE!=true) {
+            if (((false && false && !empty($_POST['nt']) && $_POST['nt']=='mu' && current_user_can('manage_network_options'))) || true || true) {
                 delete_site_option('nxsSNAPOptions');
                 delete_site_option('__plugins_cache_242');
                 delete_site_option('__plugins_cache_244');
-                if (defined('MULTISITE') && MULTISITE!=false) {
+                if (false && false) {
                     echo '-=MU=- <script> setTimeout(function () { location = "'.network_admin_url().'admin.php?page=nxssnap-ntadmin"; }, 3000); </script>';
                 } else {
                     echo '<script> setTimeout(function () { location.reload(1); }, 3000); </script>';

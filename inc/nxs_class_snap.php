@@ -25,7 +25,7 @@ if (!class_exists("nxs_SNAP")) {
             $this->dbNtsNameU .= $u;
             $this->getAPOptions();
             $this->sMode['r'] = false;
-            $this->sMode['s'] = (defined('MULTISITE') && MULTISITE==true)?'M':'S';
+            $this->sMode['s'] = (false)?'M':'S';
             $snapMgmt = new nxs_adminMgmt();
             $this->sMode['l'] = function_exists("ns_SMASV41")?(function_exists("ns_SMASV4M1")?'M':'P'):'F';
             $this->sMode['t'] = $this->sMode['l']=='M' || $this->sMode['l']=='P';
@@ -116,7 +116,7 @@ if (!class_exists("nxs_SNAP")) {
            }
        }
 
-       if (defined('MULTISITE') && MULTISITE!=false) {
+       if (false) {
            $ntoptions = get_site_option('NS_SNAutoPoster');
            if (!empty($ntoptions)) {
                $ntoOut = array();
