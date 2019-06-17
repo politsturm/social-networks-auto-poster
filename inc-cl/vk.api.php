@@ -147,6 +147,8 @@ if (!class_exists("nxs_class_SNAP_VK")) {
                 $atts[] = $urlToGo;
             if (is_array($atts))
                 $atts = implode(',', $atts);
+
+	    // Send post
             $postUrl  = 'https://api.vk.com/method/wall.post?v=5.71';
             $msg      = strip_tags($msg);
             $postArr  = array(
@@ -160,25 +162,55 @@ if (!class_exists("nxs_class_SNAP_VK")) {
             $hdrsArr  = nxs_getNXSHeaders('https://api.vk.com', true);
             $advSet   = nxs_mkRemOptsArr($hdrsArr, '', $postArr);
             $response = nxs_remote_post($postUrl, $advSet);
-            // prr($advSet);
-            // prr($response);
+
             if (is_nxs_error($response) ||
                 (is_object($response) && (isset($response->errors))) ||
                 (is_array($response) && stripos($response['body'], '"error":') !== false)) {
                 $badOut['Error'] .= 'Error: ' . print_r($response, true);
-            } else {
-                $respJ = json_decode($response['body'], true);
-                $ret   = $options['pgIntID'] . '_' . $respJ['response']['post_id'];
-            }
-            if (isset($ret) && $ret != '')
-                return array(
-                    'postID' => $ret,
-                    'isPosted' => 1,
-                    'postURL' => 'http://vk.com/wall' . $ret,
-                    'pDate' => date('Y-m-d H:i:s'),
-                    'msg' => $badOut['Error']
+                return $badOut;
+	    }
+
+            $respJ = json_decode($response['body'], true);
+            $postId = $respJ['response']['post_id'];
+            $ret   = $options['pgIntID'] . '_' . $postId;
+            if (!isset($ret) || $ret == '')
+		return $badOut;
+
+	    // Add comment
+	    $addComment = false;
+	    if ($addComment) {
+                $postUrl  = 'https://api.vk.com/method/wall.createComment?v=5.71';
+                $pgIntId = str_replace('-', '', $options['pgIntID']);
+                $postArr  = array(
+                    'owner_id' => $options['pgIntID'],
+                    'post_id' => $postId,
+                    'access_token' => $options['appAuthToken'],
+                    'from_group' => $pgIntId,
+                    'message' => $message['url'],
+                    'v' => '5.71'
                 );
-            return $badOut;
+                $hdrsArr  = nxs_getNXSHeaders('https://api.vk.com', true);
+                $advSet   = nxs_mkRemOptsArr($hdrsArr, '', $postArr);
+                $response = nxs_remote_post($postUrl, $advSet);
+
+                if (is_nxs_error($response) ||
+                    (is_object($response) && (isset($response->errors))) ||
+                    (is_array($response) && stripos($response['body'], '"error":') !== false)) {
+                    $badOut['Error'] .= 'Error: ' . print_r($response, true);
+                    return $badOut;
+	        }
+	    }
+
+            if (!isset($ret) || $ret == '')
+		return $badOut;
+
+            return array(
+                'postID' => $ret,
+                'isPosted' => 1,
+                'postURL' => 'http://vk.com/wall' . $ret,
+                'pDate' => date('Y-m-d H:i:s'),
+                'msg' => $badOut['Error']
+            );
         }
     }
 }
