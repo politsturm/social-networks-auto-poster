@@ -134,6 +134,7 @@ if (!class_exists("nxs_class_SNAP_VK")) {
                 $postType = 'T';
             $msgOpts['type'] = $postType;
             if ($postType == 'I') {
+                $imgURL = str_replace('http://', 'https://', $imgURL);
                 $imgUpld = $this->nxs_uplImgtoVK($imgURL, $options);
                 if (is_object($imgUpld)) {
                     $imgID  = 'photo' . $imgUpld->owner_id . '_' . $imgUpld->id;
