@@ -572,7 +572,8 @@ if (!function_exists("nxs_clean_string")) {
     function nxs_clean_string($string)
     {
         $s = trim($string);
-        if (function_exists("iconv")) {
+        // iconv doesn't work. Disable
+        if (false && function_exists("iconv")) {
             $s = iconv("UTF-8", "UTF-8//IGNORE", $s);
         } elseif (function_exists("mb_convert_encoding") && function_exists("mb_split")) {
             $s = mb_convert_encoding($s, "UTF-8", mb_detect_encoding($s));
