@@ -177,7 +177,7 @@ if (!class_exists("nxs_class_SNAP_VK")) {
 		return $badOut;
 
 	    // Add comment
-	    $addComment = false;
+	    $addComment = true;
 	    if ($addComment) {
                 $postUrl  = 'https://api.vk.com/method/wall.createComment?v=5.71';
                 $pgIntId = str_replace('-', '', $options['pgIntID']);
