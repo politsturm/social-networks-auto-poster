@@ -13,7 +13,14 @@ $nxs_snapAvNts[] = array(
 if (!class_exists("nxs_snapClassVK")) {
     class nxs_snapClassVK extends nxs_snapClassNT
     {
-        var $ntInfo = array('code' => 'VK', 'lcode' => 'vk', 'name' => 'VK.Com', 'defNName' => 'uName', 'tstReq' => false, 'instrURL' => 'https://www.nextscripts.com/setup-installation-vkontakte-social-networks-auto-poster-wordpress/');
+        var $ntInfo = array(
+            'code' => 'VK',
+            'lcode' => 'vk',
+            'name' => 'VK.Com',
+            'defNName' => 'uName',
+            'tstReq' => false,
+            'instrURL' => 'https://www.nextscripts.com/setup-installation-vkontakte-social-networks-auto-poster-wordpress/'
+        );
 
         function toLatestVer($ntOpts)
         {
